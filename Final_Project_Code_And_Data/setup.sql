@@ -99,7 +99,6 @@ CREATE TABLE to_read (
     PRIMARY KEY (user_id)
 );
 
--- An index on the title, since we expect that many searches and queries
--- related to titles of books rather than on unique ISBN 13 identifier would
--- occur for our database.
-CREATE INDEX idx_title ON books(orig_title);
+-- An index on orig_publication_yr, since we expect searches and queries
+-- related to the publication year.
+CREATE INDEX idx_year ON books(orig_publication_yr);
