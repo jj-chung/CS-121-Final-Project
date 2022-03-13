@@ -12,7 +12,11 @@ CREATE TABLE books (
     -- Unique identifier for each book, stands for International Standard Book
     -- Number. An ISBN is assigned to each separate edition and variation of a 
     -- publication.
-    isbn_10                 CHAR(13)    NOT NULL,
+    isbn_13                 CHAR(13)    NOT NULL,
+    -- Another way to identify books (but not used as an identifier in this
+    -- table). For more than thirty yeaazrs, ISBNs were 10 digits long, but the
+    -- system switched to a 13-digit format in 2007.
+    isbn_10                 CHAR(10)    NOT NULL,
     -- Original title of publication.
     orig_title              VARCHAR(50) NOT NULL,
     -- Original year of publication.
