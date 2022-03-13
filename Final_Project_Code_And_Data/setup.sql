@@ -64,9 +64,9 @@ CREATE TABLE book_details (
     -- The number of pages each book has.
     num_pages           INT,
     -- The number of comments the book has received on goodreads
-    num_comments,
+    num_comments        INT,
     -- The number of editions of the book which have been released
-    num_editions,
+    num_editions        INT,
     FOREIGN KEY (isbn_13) REFERENCES books(isbn_13)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
