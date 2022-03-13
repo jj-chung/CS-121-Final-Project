@@ -12,19 +12,18 @@ CREATE TABLE books (
     -- Unique identifier for each book, stands for International Standard Book
     -- Number. An ISBN is assigned to each separate edition and variation of a 
     -- publication.
-    isbn_13                 CHAR(13)    NOT NULL,
-    -- Another way to identify books (but not used as an identifier in this
-    -- table). For more than thirty yeaazrs, ISBNs were 10 digits long, but the
-    -- system switched to a 13-digit format in 2007.
-    isbn_10                 CHAR(10)    NOT NULL,
+    isbn_10                 CHAR(13)    NOT NULL,
     -- Original title of publication.
     orig_title              VARCHAR(50) NOT NULL,
     -- Original year of publication.
     orig_publication_yr     YEAR,
     -- A 3-character language code which identifies the language in which the 
     -- book was published.
-    language_code            CHAR(3)    NOT NULL,
-    PRIMARY KEY (isbn_13)
+    language_code            VARCHAR(5) NOT NULL,
+    PRIMARY KEY (isbn_13),
+    -- ISBN 10 numbers should be unique, even though we aren't using them as
+    -- our PK
+    UNIQUE (isbn_10)
 );
 
 -- This table holds isbn_10's and authors for different books.
@@ -48,7 +47,7 @@ CREATE TABLE genres (
     -- Genre associated with the book. Note that there may be multiple genres
     -- associated with one book.
     genre       VARCHAR(50) NOT NULL,
-    PRIMARY KEY (isbn_13, author),
+    PRIMARY KEY (isbn_13, genre),
     FOREIGN KEY (isbn_13) REFERENCES books(isbn_13)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -67,6 +66,7 @@ CREATE TABLE book_details (
     num_comments        INT,
     -- The number of editions of the book which have been released
     num_editions        INT,
+    PRIMARY KEY (isbn_13),
     FOREIGN KEY (isbn_13) REFERENCES books(isbn_13)
         ON UPDATE CASCADE ON DELETE CASCADE
 );
@@ -78,9 +78,9 @@ CREATE TABLE ratings (
     -- Unique identifier for each book.
     isbn_13     CHAR(13)    NOT NULL,
     -- Rating given to a book by a user, out of 5 stars.
-    rating      INT         NOT NULL,
+    rating      TINYINT     NOT NULL,
     PRIMARY KEY (user_id, book_id),
-    CHECK (rating <= 5)
+    CHECK (rating <= 5) AND (rating >= 1)
 );
 
 -- This table holds information about the books that users have on their 
@@ -94,3 +94,8 @@ CREATE TABLE to_read (
     isbn_13     CHAR(13)    NOT NULL,
     PRIMARY KEY (user_id)
 );
+
+-- An index on the title, since we expect that many searches and queries
+-- related to titles of books rather than on unique ISBN 13 identifier would
+-- occur for our database.
+CREATE INDEX idx_title ON books(orig_title);
