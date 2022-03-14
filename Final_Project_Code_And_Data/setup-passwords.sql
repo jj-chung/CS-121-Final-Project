@@ -2,9 +2,12 @@
 
 -- (Provided) This function generates a specified number of characters for using 
 -- as a salt in passwords.
+
+DROP FUNCTION IF EXISTS make_salt;
+
 DELIMITER !
 CREATE FUNCTION make_salt(num_chars INT) 
-RETURNS VARCHAR(20) NOT DETERMINISTIC
+RETURNS VARCHAR(20) DETERMINISTIC
 BEGIN
     DECLARE salt VARCHAR(20) DEFAULT '';
 
@@ -21,6 +24,9 @@ BEGIN
     RETURN salt;
 END !
 DELIMITER ;
+
+-- Drop statement for table
+DROP TABLE IF EXISTS user_info;
 
 -- Provided 
 -- This table holds information for authenticating users based on
@@ -48,12 +54,15 @@ CREATE TABLE user_info (
 -- Adds a new user to the user_info table, using the specified password (max
 -- of 20 characters). Salts the password with a newly-generated salt value,
 -- and then the salt and hash values are both stored in the table.
+
+DROP PROCEDURE IF EXISTS sp_add_user;
+
 DELIMITER !
 CREATE PROCEDURE sp_add_user(new_username VARCHAR(20), password VARCHAR(20))
 BEGIN
     -- The salt we will add to the password before hashing
     DECLARE pw_salt CHAR(8);
-    SELECT make_salt(8) INTO salt;
+    SELECT make_salt(8) INTO pw_salt;
 
     -- Insert the new user info user_info, using SHA2 with 256-bit hashes for
     -- the user's password
@@ -66,6 +75,9 @@ DELIMITER ;
 -- Authenticates the specified username and password against the data
 -- in the user_info table.  Returns 1 if the user appears in the table, and the
 -- specified password hashes to the value for the user. Otherwise returns 0.
+
+DROP FUNCTION IF EXISTS authenticate;
+
 DELIMITER !
 CREATE FUNCTION authenticate(username VARCHAR(20), password VARCHAR(20))
 RETURNS TINYINT DETERMINISTIC
@@ -98,24 +110,27 @@ DELIMITER ;
 -- [Problem 1c]
 -- Add at least two users into your user_info table so that when we run this 
 -- file, we will have examples users in the database.
-sp_add_user('avidreader', 'WRAYp7e');
-sp_add_user('bookworm', '5d3SqJX');
+CALL sp_add_user('avidreader', 'WRAYp7e');
+CALL sp_add_user('bookworm', '5d3SqJX');
 
 -- [Problem 1d]
 -- Optional: Create a procedure sp_change_password to generate a new salt and 
 -- change the given user's password to the given password (after salting and 
 -- hashing)
+
+DROP PROCEDURE IF EXISTS sp_change_password;
+
 DELIMITER !
 CREATE PROCEDURE sp_change_password(existing_username VARCHAR(20), 
     password VARCHAR(20))
 BEGIN
     -- The salt we will add to the password before hashing
     DECLARE pw_salt CHAR(8);
-    SELECT make_salt(8) INTO salt;
+    SELECT make_salt(8) INTO pw_salt;
 
     UPDATE user_info
         SET salt = pw_salt, 
-            password_hash = SHA2(CONCAT(pw_salt, password), 256))
+            password_hash = SHA2(CONCAT(pw_salt, password), 256)
         WHERE username = existing_username;
 END !
 DELIMITER ;
