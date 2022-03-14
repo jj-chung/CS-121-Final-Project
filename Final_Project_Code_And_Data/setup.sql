@@ -3,7 +3,7 @@
 
 DROP DATABASE IF EXISTS booksdb;
 CREATE DATABASE booksdb;
-USE DATABASE booksdb;
+USE booksdb;
 
 -- Maintain referential integrity when dropping tables, keeping in mind foreign
 -- key constraints.  
