@@ -59,5 +59,17 @@ dataset, each described below:
     - ```isbn_13```: See books.csv.
 
 ## Instructions for loading our data from the command-line in MySQL
+After cloning this repository using ```git clone``` or downloading this 
+repository, 
+1. Change directories to ```CS 121 Relational Databases\CS-121-Final-Project```
+2. Start mysql. Then within mysql:
+3. Setup the database and tables using ```source setup.sql```
+4. Load the data using ```source load-data.sql```
+5. Create database password management using ```source setup-passwords.sql```
+6. Create database routines using ```source setup-routines.sql``` 
+7. Create client permissions by using ```source grant-permissions.sql```
+8. Quit mysql using ```quit```
+9. In the main command line, use ```python3 app.py``` to begin the app (see 
+below for specific instructions on running our Python program).
 
 ## Instructions for running our Python program
