@@ -1,7 +1,7 @@
 isbn_13,author
 9780439023480,Suzanne Collins
 9780439554930,J.K. Rowling
-9780439554930,Mary GrandPr√©
+9780439554930,Mary GrandPrÈ
 9780316015840,Stephenie Meyer
 9780061120080,Harper Lee
 9780743273560,F. Scott Fitzgerald
@@ -19,24 +19,24 @@ isbn_13,author
 9780307269750,Reg Keeland
 9780439023500,Suzanne Collins
 9780439655480,J.K. Rowling
-9780439655480,Mary GrandPr√©
+9780439655480,Mary GrandPrÈ
 9780439655480,Rufus Beck
 9780439023510,Suzanne Collins
 9780439358070,J.K. Rowling
-9780439358070,Mary GrandPr√©
+9780439358070,Mary GrandPrÈ
 9780316166680,Alice Sebold
 9780439064870,J.K. Rowling
-9780439064870,Mary GrandPr√©
+9780439064870,Mary GrandPrÈ
 9780439139600,J.K. Rowling
-9780439139600,Mary GrandPr√©
+9780439139600,Mary GrandPrÈ
 9780545010220,J.K. Rowling
-9780545010220,Mary GrandPr√©
+9780545010220,Mary GrandPrÈ
 9780307277670,Dan Brown
 9780439785970,J.K. Rowling
-9780439785970,Mary GrandPr√©
+9780439785970,Mary GrandPrÈ
 9780140283330,William Golding
 9780743477120,William Shakespeare
-9780743477120,Robert           Jackson
+9780743477120,Robert Jackson
 9780297859380,Gillian Flynn
 9780399155340,Kathryn Stockett
 9780142000670,John Steinbeck
@@ -49,7 +49,7 @@ isbn_13,author
 9780143038410,Elizabeth Gilbert
 9780786838650,Rick Riordan
 9780451529300,Louisa May Alcott
-9780142437210,Charlotte Bront√´
+9780142437210,Charlotte BrontÎ
 9780142437210,Michael Mason
 9780770430080,Yann Martel
 9781565125600,Sara Gruen
@@ -72,7 +72,7 @@ isbn_13,author
 9781400032720,Mark Haddon
 9781594633670,Paula Hawkins
 9780679879240,Philip Pullman
-9780393978900,Emily Bront√´
+9780393978900,Emily BrontÎ
 9780393978900,Richard J. Dunn
 9780743454540,Jodi Picoult
 9780385333850,Kurt Vonnegut Jr.
@@ -94,9 +94,9 @@ isbn_13,author
 9780143039950,Homer
 9780143039950,Robert Fagles
 9780143039950,E.V. Rieu
-9780143039950,Fr√©d√©ric Mugler
+9780143039950,FrÈdÈric Mugler
 9780143039950,Bernard Knox
-9780156012200,Antoine de Saint-Exup√©ry
+9780156012200,Antoine de Saint-ExupÈry
 9780156012200,Richard Howard
 9780156012200,Dom Marcos Barbosa
 9780156012200,Melina Karakosta
@@ -116,7 +116,7 @@ isbn_13,author
 9780061234000,Steven D. Levitt
 9780061234000,Stephen J. Dubner
 9780517189600,Frances Hodgson Burnett
-9780060531040,Gabriel Garc√≠a M√°rquez
+9780060531040,Gabriel GarcÌa M·rquez
 9780060531040,Gregory Rabassa
 9780375751520,Oscar Wilde
 9780375751520,Jeffrey Eugenides
@@ -283,7 +283,7 @@ isbn_13,author
 9780192802640,Deidre Shauna Lynch
 9780312370830,Tatiana de Rosnay
 9780452284690,Stephen King
-9781400034680,Gabriel Garc√≠a M√°rquez
+9781400034680,Gabriel GarcÌa M·rquez
 9781400034680,Edith Grossman
 9780399159340,Liane Moriarty
 9780385494790,Jon Krakauer
@@ -315,7 +315,7 @@ isbn_13,author
 9780517223630,Jane Carruth
 9780517223630,Lewis Carroll
 9780517223630,Rene Cloke
-9780143034900,Carlos Ruiz Zaf√≥n
+9780143034900,Carlos Ruiz ZafÛn
 9780143034900,Lucia Graves
 9780385738750,James Dashner
 9780671723650,Dale Carnegie
@@ -415,7 +415,7 @@ isbn_13,author
 9780061969550,Pittacus Lore
 9780140275360,Homer
 9780140275360,Robert Fagles
-9780140275360,Fr√©d√©ric Mugler
+9780140275360,FrÈdÈric Mugler
 9780140275360,Bernard Knox
 9780316228530,J.K. Rowling
 9780385339700,John Grisham
@@ -513,7 +513,7 @@ isbn_13,author
 9780062059960,Kiera Cass
 9780156001310,Umberto Eco
 9780156001310,William Weaver
-9780156001310,Se√°n Barrett
+9780156001310,Se·n Barrett
 9781416914630,Beatrice Sparks
 9781416914630,Anonymous
 9780802130200,John Kennedy Toole
@@ -567,7 +567,7 @@ isbn_13,author
 9780345368580,J.R.R. Tolkien
 9780345368580,David Wenzel
 9780345368580,Sean Deming
-9781594489590,Junot D√≠az
+9781594489590,Junot DÌaz
 9780061120060,Zora Neale Hurston
 9780439321600,Newt Scamander
 9780439321600,J.K. Rowling
@@ -586,7 +586,7 @@ isbn_13,author
 9780375757330,Daniel Defoe
 9780375757330,Gerald McCann
 9780375757330,Virginia Woolf
-9780937832390,Niccol√≤ Machiavelli
+9780937832390,NiccolÚ Machiavelli
 9780937832390,Adolph Caso
 9780937832390,Rufus Goodwin
 9780937832390,Benjamin Martinez
@@ -641,7 +641,7 @@ isbn_13,author
 9780965341980,Haruki Murakami
 9780965341980,Jay Rubin
 9780375507250,David Mitchell
-9780767902890,"""Tim OBrien"""
+9780767902890,Tim OBrien
 9781844137880,Banksy
 9780061978070,Lauren Oliver
 9780307277890,Jeff Lindsay
@@ -653,13 +653,13 @@ isbn_13,author
 9780743482750,Barbara A. Mowat
 9780743482750,Paul Werstine
 9780743482750,Gail Kern Paster
-9780743482750,Robert          Jackson
+9780743482750,Robert Jackson
 9780393320980,Unknown
 9780393320980,Seamus Heaney
 9781401207530,Frank Miller
 9781401207530,David Mazzucchelli
 9781401207530,Richmond Lewis
-9781401207530,"""Dennis ONeil"""
+9781401207530,Dennis ONeil
 9780062409850,Harper Lee
 9780316143480,David Sedaris
 9780316134030,Laini Taylor
@@ -735,7 +735,7 @@ isbn_13,author
 9780316013680,Sherman Alexie
 9780316013680,Ellen Forney
 9780679760800,Mikhail Bulgakov
-9780679760800,"""Katherine Tiernan OConnor"""
+9780679760800,Katherine Tiernan OConnor
 9780679760800,Diana Burgin
 9780679760800,Ellendea Proffer
 9780553383040,Ursula K. Le Guin
@@ -744,7 +744,7 @@ isbn_13,author
 9780743253970,John Knowles
 9780385339600,John Grisham
 9780142437230,Miguel de Cervantes Saavedra
-9780142437230,Roberto Gonz√°lez Echevarr√≠a
+9780142437230,Roberto Gonz·lez EchevarrÌa
 9780142437230,John Rutherford
 9780006480100,Robin Hobb
 9780345418920,Douglas Adams
@@ -917,7 +917,7 @@ isbn_13,author
 9780930289450,Tim Sale
 9780679732760,Ralph Ellison
 9780374105240,Ishmael Beah
-9780689862200,"""Robert C. OBrien"""
+9780689862200,Robert C. OBrien
 9780751514630,Stephen King
 9780060529960,Laura Ingalls Wilder
 9780060529960,Garth Williams
@@ -932,7 +932,7 @@ isbn_13,author
 9781620610080,Jennifer L. Armentrout
 9780345418910,Douglas Adams
 9781619630630,Sarah J. Maas
-9781932664090,"""Bryan Lee OMalley"""
+9781932664090,Bryan Lee OMalley
 9781416586290,Jeannette Walls
 9780061020680,Terry Pratchett
 9780373210080,Julie Kagawa
@@ -1049,7 +1049,7 @@ isbn_13,author
 9780307931890,David Levithan
 9780312861870,Orson Scott Card
 9780743477570,William Shakespeare
-9780743477570,Robert          Jackson
+9780743477570,Robert Jackson
 9780743477570,Barbara A. Mowat
 9780743477570,Paul Werstine
 9780440178000,James Clavell
@@ -1218,7 +1218,7 @@ isbn_13,author
 9780786838930,Melissa de la Cruz
 9780812993550,Ta-Nehisi Coates
 9780140424390,John Milton
-9780140424390,John      Leonard
+9780140424390,John Leonard
 9780393072240,Michael   Lewis
 9781416524300,Stephen King
 9780765325940,Robert Jordan
@@ -1328,7 +1328,7 @@ isbn_13,author
 9781857988840,Kurt Vonnegut Jr.
 9782266047420,Stephen King
 9782266047420,Dominique Dill
-9780062414210,"""Cynthia DAprix Sweeney"""
+9780062414210,Cynthia DAprix Sweeney
 9781563899420,Bill Willingham
 9781563899420,Lan Medina
 9781563899420,Steve Leialoha
@@ -1510,17 +1510,17 @@ isbn_13,author
 9780689818770,Brian Selznick
 9780810983920,Jeff Kinney
 9780062065250,Louise Erdrich
-9780440487620,"""Madeleine LEngle"""
+9780440487620,Madeleine LEngle
 9780062237420,Veronica Roth
 9780385539260,Hanya Yanagihara
 9781563899800,Brian K. Vaughan
 9781563899800,Pia Guerra
-9781563899800,Jos√© Marz√°n Jr.
+9781563899800,JosÈ Marz·n Jr.
 9780765330420,Brandon Sanderson
 ,Charlaine Harris
 9780345452010,Anne Tyler
 9780345452010,Jennifer Bassett
-9781442408920,Benjamin Alire S√°enz
+9781442408920,Benjamin Alire S·enz
 9780451528520,H.G. Wells
 ,Haruki Murakami
 ,Alfred Birnbaum
@@ -1565,11 +1565,11 @@ isbn_13,author
 9781400032820,Chuck Palahniuk
 9780517222850,Rosamunde Pilcher
 9781932416640,Dave Eggers
-9781400034710,Gabriel Garc√≠a M√°rquez
+9781400034710,Gabriel GarcÌa M·rquez
 9781400034710,Gregory Rabassa
 9780582416390,Ronald Holt
 9780582416390,Arthur Conan Doyle
-9780805093070,"""Bill OReilly"""
+9780805093070,Bill OReilly
 9780805093070,Martin Dugard
 9780307265750,Jhumpa Lahiri
 9780142406630,John Flanagan
@@ -1616,7 +1616,7 @@ isbn_13,author
 9780440421700,Carl Hiaasen
 9780679729520,Virgil
 9780679729520,Robert Fitzgerald
-9781594487360,Junot D√≠az
+9781594487360,Junot DÌaz
 9780307265840,Haruki Murakami
 9780307265840,Jay Rubin
 9781416995560,Jenny Han
@@ -1674,7 +1674,7 @@ isbn_13,author
 9780733800850,Richard Carlson
 9780345418780,Douglas Adams
 9780743258070,Walter Isaacson
-9780385343830,T√©a Obreht
+9780385343830,TÈa Obreht
 9780778324330,Maria V. Snyder
 9780451222350,J.R. Ward
 9780060502940,Terry Pratchett
@@ -1780,7 +1780,7 @@ isbn_13,author
 9780785136200,Roberto Aguirre-Sacasa
 9780785136200,Stephen King
 9780785136200,Mike Perkins
-9780785136200,Laura       Martin
+9780785136200,Laura  Martin
 9780671728690,William L. Shirer
 9781594481930,Nick Hornby
 9780439706410,Jeff Smith
@@ -1808,7 +1808,7 @@ isbn_13,author
 9780812983610,Karen Thompson Walker
 9780786868730,Mitch Albom
 9781400043460,Julia Child
-9781400043460,"""Alex PrudHomme"""
+9781400043460,Alex PrudHomme
 9781922182100,Graeme Simsion
 9780061177580,Charles Bukowski
 9780375825450,Wendelin Van Draanen
@@ -1828,7 +1828,7 @@ isbn_13,author
 9780062124260,Barbara Kingsolver
 9781590388980,Brandon Mull
 9780140298480,Helen Fielding
-9780679763970,Louis de Berni√®res
+9780679763970,Louis de BerniËres
 9780446698470,Nicholas Sparks
 9780767903870,Bill Bryson
 9780192123090,Arthur Conan Doyle
@@ -1909,14 +1909,14 @@ isbn_13,author
 9780060893000,Walter M. Miller Jr.
 9781580493890,Sophocles
 9781580493890,J.E. Thomas
-9781439138310,Colm T√≥ib√≠n
+9781439138310,Colm TÛibÌn
 9781442409060,Lauren DeStefano
 9780062300550,J.D. Vance
 9780312864590,Robert Jordan
 9781580495870,Stephen Crane
 9780544273000,Randall Munroe
 9780765348780,Steven Erikson
-9780440401580,"""Madeleine LEngle"""
+9780440401580,Madeleine LEngle
 9780439771340,Suzanne Collins
 9781439102720,Jodi Picoult
 9780345419640,Anne Rice
@@ -1973,7 +1973,7 @@ isbn_13,author
 9781563892260,Steve Erickson
 9780385337940,John Grisham
 9780441007320,Ursula K. Le Guin
-9780441007320,Lech Jƒôczmyk
+9780441007320,Lech J?czmyk
 9780142412140,John Green
 9780142412140,Maureen Johnson
 9780142412140,Lauren Myracle
@@ -2203,7 +2203,7 @@ isbn_13,author
 9780061020670,Terry Pratchett
 9781301347940,Katy Evans
 9780062200570,Joe Hill
-9780140434740,Anne Bront√´
+9780140434740,Anne BrontÎ
 9780140434740,Stevie Davies
 9780965476030,Walter Farley
 9780965476030,Keith Ward
@@ -2222,7 +2222,7 @@ isbn_13,author
 9780141439630,Henry James
 9780141439630,Patricia Crick
 9780486290720,Edgar Allan Poe
-9780486290720,Gustave Dor√©
+9780486290720,Gustave DorÈ
 9780486298570,Charlotte Perkins Gilman
 ,ŸÖÿ≠ŸÖÿØ ÿµÿßÿØŸÇ
 9780836204380,Bill Watterson
@@ -2239,7 +2239,7 @@ isbn_13,author
 9781423121310,Rachel Hawkins
 9788498000830,Philip K. Dick
 9788498000830,David Alabort
-9788498000830,Manuel Esp√≠n
+9788498000830,Manuel EspÌn
 9781857231520,Terry Brooks
 9780099297700,Thomas Harris
 9780061140980,L.J. Smith
@@ -2301,7 +2301,7 @@ isbn_13,author
 9781416953580,Lisa McMann
 9781439107960,Siddhartha Mukherjee
 9781416940910,Ellen Hopkins
-9780307278490,Gabriel Garc√≠a M√°rquez
+9780307278490,Gabriel GarcÌa M·rquez
 9780307278490,Edith Grossman
 9780312539560,Jeffrey Archer
 9781878424110,Deepak Chopra
@@ -2319,7 +2319,7 @@ isbn_13,author
 ,Oliver P√∂tzsch
 ,Lee Chadeayne
 9780152045660,Patricia C. Wrede
-9780152045660,Peter de S√®ve
+9780152045660,Peter de SËve
 9780515130970,Lee Child
 9780425205820,John Sandford
 9780553589180,Tami Hoag
@@ -2513,7 +2513,7 @@ isbn_13,author
 9780486234110,Wassily Kandinsky
 9780743453260,Winston Groom
 9780679720220,Albert Camus
-9780679720220,"""Justin OBrien"""
+9780679720220,Justin OBrien
 9781842430250,Tom Robbins
 9780375757850,Wilkie Collins
 9780375757850,Carolyn G. Heilbrun
@@ -2524,7 +2524,7 @@ isbn_13,author
 9780618062420,Patricia MacLachlan
 ,ŸäŸàÿ≥ŸÅ ÿ≤ŸäÿØÿßŸÜ
 9780060735420,Christopher Moore
-9781592858490,Bren√© Brown
+9781592858490,BrenÈ Brown
 9781423102270,Melissa de la Cruz
 9780670175920,Robert McCloskey
 ,Colleen Hoover
@@ -2548,7 +2548,7 @@ isbn_13,author
 9781501115070,Fredrik Backman
 9781501115070,Henning Koch
 9781416595180,Vince Flynn
-9781592407330,Bren√© Brown
+9781592407330,BrenÈ Brown
 9780316243920,Hannah Kent
 9781573229720,Sarah Waters
 9780679731150,Peter Mayle
@@ -2591,21 +2591,21 @@ isbn_13,author
 9781421505860,Tomo Kimura
 ,Frank Miller
 9780439249550,J.K. Rowling
-9780439249550,Mary GrandPr√©
+9780439249550,Mary GrandPrÈ
 9781597801580,Paolo Bacigalupi
 9780140436070,Oscar Wilde
 9780140436070,Richard Allen Cave
 9780525425630,Stephanie Perkins
 9780441014900,Ilona Andrews
 ,Jodi Ellen Malpas
-9781400096280,Ir√®ne N√©mirovsky
+9781400096280,IrËne NÈmirovsky
 9781400096280,Sandra Smith
 9780140446750,Vincent van Gogh
 9780140446750,Ronald de Leeuw
 9780140446750,Mark Roskill
 9780140446750,Arnold J. Pomerans
 9780061020670,Terry Pratchett
-9781932664130,"""Bryan Lee OMalley"""
+9781932664130,Bryan Lee OMalley
 9781401204260,Grant Morrison
 9781401204260,Dave McKean
 9781442426730,Jenny Han
@@ -2648,7 +2648,7 @@ isbn_13,author
 9781563893310,Mark Waid
 9781563893310,Alex Ross
 9781563893310,Elliot S. Maggin
-9780061120660,Henri Charri√®re
+9780061120660,Henri CharriËre
 9781573227890,Sarah Waters
 9780316201580,Chris Colfer
 9780316201580,Brandon Dorman
@@ -2756,7 +2756,7 @@ isbn_13,author
 9780440241010,Lee Child
 9780375701210,Jean-Dominique Bauby
 9780375701210,Jeremy Leggatt
-9780805096670,"""Bill OReilly"""
+9780805096670,Bill OReilly
 9780805096670,Martin Dugard
 9780767919360,Bill Bryson
 9780312595680,Chevy Stevens
@@ -2815,7 +2815,7 @@ isbn_13,author
 9780684818860,James W. Loewen
 9780553582470,Robin Hobb
 9781600102370,Joe Hill
-9781600102370,Gabriel Rodr√≠guez
+9781600102370,Gabriel RodrÌguez
 9780446363260,Alexandra Ripley
 9780425205680,Laurell K. Hamilton
 9780684843780,F. Scott Fitzgerald
@@ -2864,7 +2864,7 @@ isbn_13,author
 9781501139890,Amy Schumer
 9780140449180,Krishna-Dwaipayana Vyasa
 9780140449180,Simon Brodbeck
-9780140449180,Juan Mascar√≥
+9780140449180,Juan MascarÛ
 9780143039840,Paul Auster
 9780143039840,Art Spiegelman
 9780439120420,Pam Mu√±oz Ryan
@@ -2971,7 +2971,7 @@ isbn_13,author
 9781250006330,Amanda Hocking
 9780525952480,Jussi Adler-Olsen
 9780525952480,Lisa Hartford
-9780517405090,Gabriel Garc√≠a M√°rquez
+9780517405090,Gabriel GarcÌa M·rquez
 9781423121660,Rick Riordan
 9780676979790,Oliver Sacks
 9781501129740,Stephen King
@@ -3048,7 +3048,7 @@ isbn_13,author
 9780425267040,Maya Banks
 9780671741040,Robert McCammon
 9780307271040,Kazuo Ishiguro
-9780345459400,China Mi√©ville
+9780345459400,China MiÈville
 9781599903380,Carrie Jones
 9780061020610,Terry Pratchett
 9780140437690,Geoffrey Crayon
@@ -3063,7 +3063,7 @@ isbn_13,author
 9780439443820,Cynthia Lord
 9780752809440,Michael Connelly
 9780142001620,Mark Kurlansky
-9780375758510,Charlotte Bront√´
+9780375758510,Charlotte BrontÎ
 9780375758510,A.S. Byatt
 9780375758510,ŒúŒ±œÅŒØŒ± ŒõŒ±œäŒΩŒ¨
 9780375758510,Ignes Sodre
@@ -3087,7 +3087,7 @@ isbn_13,author
 9780785123120,Peter Sanderson
 9780743270370,Vince Flynn
 9780307959940,Peter Heller
-9780743442530,John le Carr√©
+9780743442530,John le CarrÈ
 9780441013400,Jim Butcher
 9780446676430,James Patterson
 9784103534230,Haruki Murakami
@@ -3240,7 +3240,7 @@ isbn_13,author
 9780785135810,Christopher Yost
 9780785135810,Orson Scott Card
 9780785135810,Pasqual Ferry
-9780785135810,"""Frank DArmata"""
+9780785135810,Frank DArmata
 9781421527550,Karuho Shiina
 9781421527550,Tomo Kimura
 9780553580230,Dean Koontz
@@ -3324,7 +3324,7 @@ isbn_13,author
 9780316129080,James S.A. Corey
 9780143039970,Pablo Neruda
 9780143039970,W.S. Merwin
-9780143039970,Cristina Garc√≠a
+9780143039970,Cristina GarcÌa
 9780425116840,Tom Clancy
 9780590930020,David Shannon
 9780140449100,Thomas More
@@ -3360,7 +3360,7 @@ isbn_13,author
 9780345470580,Anthony Gerard
 9780316905720,Darren Shan
 9781563898590,Alan Moore
-9781563898590,"""Kevin ONeill"""
+9781563898590,Kevin ONeill
 9780763622600,M.T. Anderson
 9780425226930,Nalini Singh
 9780486275480,Euripides
@@ -3435,7 +3435,7 @@ isbn_13,author
 9780062309660,Emma Healey
 9781416505010,Vince Flynn
 9780679444330,Isabel Wilkerson
-9780062206280,Carlos Ruiz Zaf√≥n
+9780062206280,Carlos Ruiz ZafÛn
 9780671047340,Vince Flynn
 9780439829110,John Marsden
 9781599951490,Robert M. Edsel
@@ -3448,11 +3448,11 @@ isbn_13,author
 9780785132620,Mark Millar
 9780785132620,John Romita Jr.
 9780785132620,Rob Liefeld
-9781401908970,Immacul√©e Ilibagiza
+9781401908970,ImmaculÈe Ilibagiza
 9781401908970,Steve Erwin
 9780061449120,Michael  Grant
 9780321107210,Charles Dickens
-9782877068160,Jo√´l Dicker
+9782877068160,JoÎl Dicker
 9780316176540,Kate Atkinson
 9780525951580,Harlan Coben
 9780373802490,Maria V. Snyder
@@ -3594,7 +3594,7 @@ isbn_13,author
 9780316159420,√Ösne Seierstad
 9780316159420,Ingrid Christopherson
 9780743437320,D.J. MacHale
-9780345497510,China Mi√©ville
+9780345497510,China MiÈville
 9781416510570,Kathy Reichs
 9780441017030,Ilona Andrews
 9781478322310,Chelsea M. Cameron
@@ -3730,7 +3730,7 @@ isbn_13,author
 9780759529430,Stephenie Meyer
 9780099478330,John Fowles
 9780486223060,Samuel Taylor Coleridge
-9780486223060,Gustave Dor√©
+9780486223060,Gustave DorÈ
 9780920236160,Robert Munsch
 9780920236160,Michael Martchenko
 9780582461500,John Steinbeck
@@ -3782,13 +3782,13 @@ isbn_13,author
 9780143039020,Robert  Stone
 9781480114490,Katie Ashley
 9780425213380,Patricia Cornwell
-9780393307050,"""Patrick OBrian"""
+9780393307050,Patrick OBrian
 9780575077360,Akira Toriyama
 9780441009430,Alastair Reynolds
 9780316096160,James Patterson
 9780316096160,Maxine Paetro
 9780312652910,Janet Evanovich
-9781416980060,Rachel Ren√©e Russell
+9781416980060,Rachel RenÈe Russell
 9781416509880,Kresley Cole
 9781595143980,Beth Revis
 9781841493150,Trudi Canavan
@@ -3890,7 +3890,7 @@ isbn_13,author
 9780375708280,Erik Larson
 9780141184270,Virginia Woolf
 9780007233690,Cecelia Ahern
-9780140432110,Anne Bront√´
+9780140432110,Anne BrontÎ
 9780140432110,Angeline Goreau
 9780399153720,Nora Roberts
 9781416595170,Vince Flynn
