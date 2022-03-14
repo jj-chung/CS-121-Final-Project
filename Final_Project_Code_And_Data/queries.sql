@@ -9,7 +9,7 @@ SELECT orig_title
 
 -- Get the number of ratings for each author, sorted by most to least rated
 SELECT COUNT(*) as num_ratings  
-    FROM books NATURAL JOIN ratings 
+    FROM books NATURAL JOIN ratings NATUIRAL JOIN authors
     GROUP BY author
     ORDER BY num_ratings;
 
