@@ -84,6 +84,8 @@ CREATE TABLE ratings (
     -- Rating given to a book by a user, out of 5 stars.
     rating      TINYINT     NOT NULL,
     PRIMARY KEY (user_id, isbn_13),
+    FOREIGN KEY (isbn_13) REFERENCES books(isbn_13)
+        ON UPDATE CASCADE ON DELETE CASCADE,
     CHECK (rating <= 5) AND (rating >= 1)
 );
 
@@ -96,7 +98,9 @@ CREATE TABLE to_read (
     user_id     INT         NOT NULL,
     -- Unique identifier for each book.
     isbn_13     CHAR(13)    NOT NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id, isbn_13),
+    FOREIGN KEY (isbn_13) REFERENCES books(isbn_13)
+        ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- An index on orig_publication_yr, since we expect searches and queries
