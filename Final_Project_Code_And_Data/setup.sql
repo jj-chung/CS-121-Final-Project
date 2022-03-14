@@ -83,7 +83,7 @@ CREATE TABLE ratings (
     isbn_13     CHAR(13)    NOT NULL,
     -- Rating given to a book by a user, out of 5 stars.
     rating      TINYINT     NOT NULL,
-    PRIMARY KEY (user_id, book_id),
+    PRIMARY KEY (user_id, isbn_13),
     CHECK (rating <= 5) AND (rating >= 1)
 );
 
