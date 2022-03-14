@@ -7,7 +7,10 @@ the [original goodbooks dataset](https://github.com/zygmuntz/goodbooks-10k)
 which was scraped from the Goodreads API in September 2017. The dataset contains 
 information on the 10,000 most popular books on goodreads when it was collected. 
 We selected columns that were most relevant to our application and renamed 
-certain columns for more clarity. 
+certain columns for more clarity. We have also limited our focus to the first
+3k books in the original books_enriched.csv file for the purposes of this project 
+(which are the 3k most popular books in the dataset according to the original data 
+description).
 
 We have created 5 .csv files using the .csv files from the original goodbooks
 dataset, each described below:
