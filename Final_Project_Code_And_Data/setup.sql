@@ -1,6 +1,10 @@
 -- CS 121 Winter 2022 Final Project
 -- Part B: DDL
 
+DROP DATABASE IF EXISTS booksdb;
+CREATE DATABASE booksdb;
+USE DATABASE booksdb;
+
 -- Maintain referential integrity when dropping tables, keeping in mind foreign
 -- key constraints.  
 DROP TABLE IF EXISTS books;
