@@ -90,7 +90,7 @@ CREATE TABLE ratings (
     PRIMARY KEY (user_id, isbn_13),
     FOREIGN KEY (isbn_13) REFERENCES books(isbn_13)
         ON UPDATE CASCADE ON DELETE CASCADE,
-    CHECK (rating <= 5) AND (rating >= 1)
+    CHECK (1 <= rating <= 5)
 );
 
 -- This table holds information about the books that users have on their 

@@ -24,8 +24,13 @@ def convert_ids(input_filename, output_filename, book_id_to_isbn_13):
         csv_out = csv.writer(f_out)
         for row in csv.reader(f_in):
             for i in row[-1].split():
-                isbn_13 = book_id_to_isbn_13[row[1]]
-                csv_out.writerow(row[:1] + [isbn_13] + row[2:])
+                try:
+                    # For invalid keys, remove from data by not writing to the 
+                    # output file.
+                    isbn_13 = book_id_to_isbn_13[row[1]]
+                    csv_out.writerow(row[:1] + [isbn_13] + row[2:])
+                except KeyError:
+                    pass
                 
 if __name__ == "__main__":
     # Modify genres.csv and authors.csv to have one book and one author per 
@@ -35,7 +40,7 @@ if __name__ == "__main__":
 
     # From books.csv, creating a dictionary from book_id to isbn_13
     book_id_to_isbn_13 = {}
-    filename = 'books_enriched_copy.csv'
+    filename = 'book_id_to_isbn_13.csv'
 
     with open(filename, 'r') as csvfile:
         datareader = csv.reader(csvfile)
