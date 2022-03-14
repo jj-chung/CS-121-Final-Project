@@ -11,7 +11,23 @@ certain columns for more clarity.
 
 We have created 5 .csv files using the .csv files from the original goodbooks
 dataset, each described below:
+- books.csv
+    - ```isbn_13```
+    - ```isbn_10```
+    - ```orig_title```
+    - ```orig_publication_yr```
+    - ```language_code```
 
+- book_details.csv
+    - isbn_13
+
+- authors.csv
+
+- genres.csv
+
+- ratings.csv
+
+- to_read.csv
 
 ## Instructions for loading our data from the command-line in MySQL
 
