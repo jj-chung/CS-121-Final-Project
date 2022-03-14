@@ -3,8 +3,8 @@
 
 -- Maintain referential integrity when dropping tables, keeping in mind foreign
 -- key constraints.  
-DROP TABLE IF EXISTS ;
-DROP TABLE IF EXISTS;
+DROP TABLE IF EXISTS books;
+DROP TABLE IF EXISTS authors, genres, book_details, ratings, to_read;
 
 -- This table holds information with the most essential information about each
 -- book, including isbn (which serves as a unique book id), original title, etc. 
