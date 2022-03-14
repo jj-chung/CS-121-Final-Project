@@ -21,7 +21,7 @@ CREATE TABLE books (
     orig_title              VARCHAR(50) NOT NULL,
     -- Original year of publication.
     orig_publication_yr     YEAR,
-    -- A 3-character language code which identifies the language in which the 
+    -- A short language code which identifies the language in which the 
     -- book was published.
     language_code            VARCHAR(5) NOT NULL,
     PRIMARY KEY (isbn_13),
