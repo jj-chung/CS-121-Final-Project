@@ -1,7 +1,7 @@
 -- File for Password Management section of Final Project
 
--- (Provided) This function generates a specified number of characters for using as a
--- salt in passwords.
+-- (Provided) This function generates a specified number of characters for using 
+-- as a salt in passwords.
 DELIMITER !
 CREATE FUNCTION make_salt(num_chars INT) 
 RETURNS VARCHAR(20) NOT DETERMINISTIC
@@ -41,14 +41,7 @@ CREATE TABLE user_info (
     -- represented as 2 characters.  Thus, 256 / 8 * 2 = 64.
     -- We can use BINARY or CHAR here; BINARY simply has a different
     -- definition for comparison/sorting than CHAR.
-    password_hash BINARY(64) NOT NULL,
-
-    -- Role attribute which corresponds to different roles for users in our
-    -- application
-    role VARCHAR(20) NOT NULL,
-
-    -- Check that the role is a valid role
-    CHECK (role IN ('retailer', 'reader', 'data_manager'))
+    password_hash BINARY(64) NOT NULL
 );
 
 -- [Problem 1a]
@@ -58,7 +51,14 @@ CREATE TABLE user_info (
 DELIMITER !
 CREATE PROCEDURE sp_add_user(new_username VARCHAR(20), password VARCHAR(20))
 BEGIN
-  -- TODO
+    -- The salt we will add to the password before hashing
+    DECLARE pw_salt CHAR(8);
+    SELECT make_salt(8) INTO salt;
+
+    -- Insert the new user info user_info, using SHA2 with 256-bit hashes for
+    -- the user's password
+    INSERT INTO user_info(username, salt, password_hash)
+        VALUES (new_username, pw_salt, SHA2(CONCAT(pw_salt, password), 256));
 END !
 DELIMITER ;
 
@@ -70,15 +70,52 @@ DELIMITER !
 CREATE FUNCTION authenticate(username VARCHAR(20), password VARCHAR(20))
 RETURNS TINYINT DETERMINISTIC
 BEGIN
-  -- TODO
+    -- The salt added to the password before hashing, from the user_info table
+    DECLARE pw_salt CHAR(8);
+    -- The password hash from the user_info table
+    DECLARE pw_hash BINARY(64);
+
+    -- If the username is not in the table, the user does not appear in the 
+    -- table
+    IF username NOT IN (SELECT username FROM user_info)
+        THEN RETURN 0;
+    END IF;
+
+    -- Retrieve this user's salt and password hash from the database
+    SELECT user_info.salt, user_info.password_hash INTO pw_salt, pw_hash
+        FROM user_info
+        WHERE user_info.username = username;
+
+    -- If the hashed password matches the hashed password in user_info, 
+    -- the user and password are valid
+    IF SHA2(CONCAT(pw_salt, password), 256) = pw_hash
+        THEN RETURN 1;
+        ELSE RETURN 0;
+    END IF;
 END !
 DELIMITER ;
 
 -- [Problem 1c]
--- Add at least two users into your user_info table so that when we run this file,
--- we will have examples users in the database.
-
+-- Add at least two users into your user_info table so that when we run this 
+-- file, we will have examples users in the database.
+sp_add_user('avidreader', 'WRAYp7e');
+sp_add_user('bookworm', '5d3SqJX');
 
 -- [Problem 1d]
--- Optional: Create a procedure sp_change_password to generate a new salt and change the given
--- user's password to the given password (after salting and hashing)
+-- Optional: Create a procedure sp_change_password to generate a new salt and 
+-- change the given user's password to the given password (after salting and 
+-- hashing)
+DELIMITER !
+CREATE PROCEDURE sp_change_password(existing_username VARCHAR(20), 
+    password VARCHAR(20))
+BEGIN
+    -- The salt we will add to the password before hashing
+    DECLARE pw_salt CHAR(8);
+    SELECT make_salt(8) INTO salt;
+
+    UPDATE user_info
+        SET salt = pw_salt, 
+            password_hash = SHA2(CONCAT(pw_salt, password), 256))
+        WHERE username = existing_username;
+END !
+DELIMITER ;
