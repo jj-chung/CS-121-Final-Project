@@ -1,20 +1,125 @@
 -- CS 121 Winter 2022 Final Project
 -- Part H: SQL Queries
 
--- Retrieve all young adult books written in english after 2010
+-- [Query 1]
+-- Users can fetch books that are most suited to them
+-- Retrieve all fantasy books written in english after 2010
+
 SELECT orig_title 
     FROM books NATURAL JOIN genres
-    WHERE genre = ya-adult AND language_code = eng
+    WHERE genre = "fantasy" AND language_code = "eng"
     AND orig_publication_yr > 2010;
 
--- Get the number of ratings for each author, sorted by most to least rated
-SELECT COUNT(*) as num_ratings  
-    FROM books NATURAL JOIN ratings NATUIRAL JOIN authors
-    GROUP BY author
-    ORDER BY num_ratings;
+-- [Query 2]
+-- Users can get descriptions for books of interest
+-- Retrieve descriptions of all books related to the Harry Potter series
+SELECT orig_title, book_description
+FROM books NATURAL JOIN book_details WHERE
+orig_title LIKE "%Harry Potter%"
 
--- Get the highest-rated book titles in each genre and year, sort from oldest 
--- to newest
+
+-- [Query 3]
+-- For genres with foreign language books,
+-- get the percentage of books not written in English, from highest to lowest
+
+SELECT genre, (foreign_books_count/genre_count) as foreign_books_percent FROM 
+  (SELECT genre, COUNT(*) as foreign_books_count
+  FROM books NATURAL JOIN genres
+  WHERE language_code != "eng"
+  GROUP BY genre) as foreign_books
+NATURAL JOIN 
+  (SELECT genre, COUNT(*) as genre_count
+  FROM books NATURAL JOIN genres
+  GROUP BY genre) as all_books
+ORDER BY foreign_books_percent DESC;
+
+-- [Query 4]
+— Get the longest book by every author, in alphabetical order by author
+— This query requires the additional info in the book_details table
+
+SELECT author, orig_title FROM
+(
+  SELECT author, max(num_pages) as max_page_amount
+  FROM books NATURAL JOIN book_details NATURAL JOIN authors
+  GROUP BY author) as max_pages
+NATURAL JOIN
+(
+  SELECT orig_title, author, num_pages
+  FROM authors NATURAL JOIN books
+  NATURAL JOIN book_details) as book_lengths
+WHERE num_pages = max_page_amount
+ORDER BY author;
+
+-- [Query 5]
+— Get all authors who have published in the 20th century and the most recent year they published
+-- ALSO IN RELATIONAL ALGEBRA
+
+SELECT author, max(orig_publication_yr) as last_publish
+  FROM authors NATURAL JOIN books
+  GROUP BY author
+  HAVING last_publish > 2000
+  ORDER BY last_publish DESC;
+
+-- [Query 6]
+-- Get the top 10 most critically acclaimed authors by finding those with the highest average rating 
+
+SELECT author, AVG(rating) average_rating
+    FROM books NATURAL JOIN ratings NATURAL JOIN authors
+    GROUP BY author
+    ORDER BY average_rating DESC
+    LIMIT 10;
+
+-- [Query 7]
+-- Get the number of ratings for each author, sorted by most to least rated, to find the authors who the most people have read
+-- ALSO IN RELATIONAL ALGEBRA
+
+SELECT author, COUNT(*) as num_ratings  
+    FROM books NATURAL JOIN ratings NATURAL JOIN authors
+    GROUP BY author
+    ORDER BY num_ratings DESC;
+
+-- [Query 8]
+—- To find new releases to read, search the books written in the last 7 years
+-- that are most common on people’s too read list
+
+SELECT isbn_10, orig_title,COUNT(*) as read_list_count
+  FROM to_read
+  NATURAL JOIN books
+  WHERE orig_publication_yr > 2015
+  GROUP BY isbn_10
+  ORDER BY read_list_count DESC;
+
+-- [Query 9]
+— Find the most commonly rated book in each genre
+
+SELECT genre, orig_title FROM
+    (SELECT genre, max(num_ratings) as num_ratings FROM
+      (SELECT isbn_10, COUNT(*) as num_ratings
+      FROM ratings GROUP by isbn_10) as book_ratings_count
+    NATURAL JOIN genres GROUP BY genre) as max_book_ratings
+  NATURAL JOIN
+    (SELECT genre, isbn_10, num_ratings, orig_title FROM
+      (SELECT isbn_10, COUNT(*) as num_ratings
+      FROM ratings GROUP by isbn_10) as book_ratings_count
+    NATURAL JOIN genres NATURAL JOIN books) as all_book_ratings;
+
+-- [Query 10]
+— Find the highest rated book in each genre
+
+SELECT genre, orig_title FROM
+    (SELECT genre, max(avg_ratings) as avg_ratings FROM
+      (SELECT isbn_10, avg(rating) as avg_ratings
+      FROM ratings GROUP by isbn_10) as book_ratings_count
+    NATURAL JOIN genres GROUP BY genre) as max_book_ratings
+  NATURAL JOIN
+    (SELECT genre, isbn_10, avg_ratings, orig_title FROM
+      (SELECT isbn_10, avg(rating) as avg_ratings 
+      FROM ratings GROUP by isbn_10) as book_ratings_count
+    NATURAL JOIN genres NATURAL JOIN books) as all_book_ratings;
+
+-- [Query 11]
+-- Get the highest-rated book titles in each genre and year, sort from oldest to newest
+-— this query makes use of our UDF
 WITH 
 (
     SELECT genre, orig_publication_yr, MAX(get_avg_rating(isbn_13)) as max_rating
