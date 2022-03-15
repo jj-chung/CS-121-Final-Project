@@ -7,7 +7,7 @@
 
 SELECT orig_title 
     FROM books NATURAL JOIN genres
-    WHERE genre = "fantasy" AND language_code = "eng"
+    WHERE genre = 'fantasy' AND language_code = 'eng'
     AND orig_publication_yr > 2010;
 
 -- [Query 2]
@@ -15,7 +15,7 @@ SELECT orig_title
 -- Retrieve descriptions of all books related to the Harry Potter series
 SELECT orig_title, book_description
     FROM books NATURAL JOIN book_details 
-    WHERE orig_title LIKE "%Harry Potter%";
+    WHERE orig_title LIKE '%Harry Potter%';
 
 
 -- [Query 3]
@@ -25,7 +25,7 @@ SELECT orig_title, book_description
 SELECT genre, (foreign_books_count/genre_count) as foreign_books_percent FROM 
     (SELECT genre, COUNT(*) as foreign_books_count
     FROM books NATURAL JOIN genres
-    WHERE language_code != "eng"
+    WHERE language_code != 'eng'
     GROUP BY genre) as foreign_books
 NATURAL JOIN 
     (SELECT genre, COUNT(*) as genre_count
