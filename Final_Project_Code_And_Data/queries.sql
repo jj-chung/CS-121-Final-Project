@@ -1,11 +1,11 @@
 -- CS 121 Winter 2022 Final Project
 -- Part H: SQL Queries
 
--- Get all the books made in a particular year, genre, and language
+-- Retrieve all young adult books written in english after 2010
 SELECT orig_title 
     FROM books NATURAL JOIN genres
-    WHERE genre = chosen_genre AND language = chosen_language
-    AND orig_publication_yr = chosen_year;
+    WHERE genre = ya-adult AND language_code = eng
+    AND orig_publication_yr > 2010;
 
 -- Get the number of ratings for each author, sorted by most to least rated
 SELECT COUNT(*) as num_ratings  
