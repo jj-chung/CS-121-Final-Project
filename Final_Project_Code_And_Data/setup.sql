@@ -20,11 +20,11 @@ CREATE TABLE books (
     -- Original title of publication.
     orig_title              VARCHAR(200) NOT NULL,
     -- Original year of publication.
-    -- Using INT since YEAR has a limited range
-    orig_publication_yr     INT,
+    -- Using SMALLINT since YEAR has a limited range (after 1900 only)
+    orig_publication_yr     SMALLINT,
     -- A short language code which identifies the language in which the 
     -- book was published.
-    language_code            VARCHAR(5) NOT NULL,
+    language_code           VARCHAR(5) NOT NULL,
     PRIMARY KEY (isbn_10),
     -- ISBN 10 numbers should be unique, even though we aren't using them as
     -- our PK
