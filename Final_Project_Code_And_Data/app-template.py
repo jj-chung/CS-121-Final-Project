@@ -11,6 +11,9 @@ brief overview of your application as well (including your name/partners name).
 Some sections are provided as recommended program breakdowns, but are optional
 to keep, and you will probably want to extend them based on your application's
 features.
+
+Names: Amelia Whitworth, Jennie Chung
+Emails: awhirwor@caltech.edu, jjchung@caltech.edu 
 """
 import sys  # to print error messages to sys.stderr
 import mysql.connector

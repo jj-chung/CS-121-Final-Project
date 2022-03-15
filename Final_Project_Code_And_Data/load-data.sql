@@ -1,4 +1,6 @@
 -- CS 121 Winter 2022 Final Project
+-- Part D
+
 -- Commands to load the CSV files into our tables.
 -- Change '\n' to '\r\n' on Windows machines if needed.
 LOAD DATA LOCAL INFILE 'books.csv' INTO TABLE books
