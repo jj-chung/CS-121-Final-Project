@@ -29,7 +29,10 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS add_highest_rated_book;
 
 DELIMITER !
-CREATE PROCEDURE add_highest_rated_book(user_id INT, input_author VARCHAR(50))
+CREATE PROCEDURE add_highest_rated_book(
+    in_user_id INT, 
+    input_author VARCHAR(50)
+)
 BEGIN
     -- The isbn_10 identifier of the highest rated book by the specified author
     DECLARE highest_rated_isbn_10_by_author CHAR(10);
@@ -47,10 +50,13 @@ BEGIN
         SELECT isbn_10
             FROM author_book_ratings 
             WHERE rating = (SELECT MAX(rating) from author_book_ratings)
-        INTO highest_rated_isbn_10_by_author;
+            -- If there are multiple books which have the highest rating, we 
+            -- select the first book from our query
+            LIMIT 1
+        INTO highest_rated_isbn_10_by_author
 
-    -- Insert the new to read info to to_read
     INSERT INTO to_read(user_id, isbn_10)
+        VALUES (in_user_id, highest_rated_isbn_10_by_author)
         
 END !
 DELIMITER ;

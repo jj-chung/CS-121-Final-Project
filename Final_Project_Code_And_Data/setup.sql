@@ -25,10 +25,7 @@ CREATE TABLE books (
     -- A short language code which identifies the language in which the 
     -- book was published.
     language_code           VARCHAR(5) NOT NULL,
-    PRIMARY KEY (isbn_10),
-    -- ISBN 10 numbers should be unique, even though we aren't using them as
-    -- our PK
-    UNIQUE (isbn_10)
+    PRIMARY KEY (isbn_10)
 );
 
 -- This table holds isbn_10's and authors for different books.
