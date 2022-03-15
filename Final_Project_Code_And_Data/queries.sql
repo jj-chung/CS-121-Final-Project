@@ -34,8 +34,8 @@ NATURAL JOIN
 ORDER BY foreign_books_percent DESC;
 
 -- [Query 4]
-— Get the longest book by every author, in alphabetical order by author
-— This query requires the additional info in the book_details table
+-- Get the longest book by every author, in alphabetical order by author
+-- This query requires the additional info in the book_details table
 
 SELECT author, orig_title FROM
 (
@@ -51,7 +51,7 @@ WHERE num_pages = max_page_amount
 ORDER BY author;
 
 -- [Query 5]
-— Get all authors who have published in the 20th century and the most recent year they published
+-- Get all authors who have published in the 20th century and the most recent year they published
 -- ALSO IN RELATIONAL ALGEBRA
 
 SELECT author, max(orig_publication_yr) as last_publish
@@ -79,7 +79,7 @@ SELECT author, COUNT(*) as num_ratings
     ORDER BY num_ratings DESC;
 
 -- [Query 8]
-—- To find new releases to read, search the books written in the last 7 years
+-- To find new releases to read, search the books written in the last 7 years
 -- that are most common on people’s too read list
 
 SELECT isbn_10, orig_title,COUNT(*) as read_list_count
@@ -90,7 +90,7 @@ SELECT isbn_10, orig_title,COUNT(*) as read_list_count
   ORDER BY read_list_count DESC;
 
 -- [Query 9]
-— Find the most commonly rated book in each genre
+-- Find the most commonly rated book in each genre
 
 SELECT genre, orig_title FROM
     (SELECT genre, max(num_ratings) as num_ratings FROM
@@ -104,7 +104,7 @@ SELECT genre, orig_title FROM
     NATURAL JOIN genres NATURAL JOIN books) as all_book_ratings;
 
 -- [Query 10]
-— Find the highest rated book in each genre
+-- Find the highest rated book in each genre
 
 SELECT genre, orig_title FROM
     (SELECT genre, max(avg_ratings) as avg_ratings FROM
@@ -118,8 +118,9 @@ SELECT genre, orig_title FROM
     NATURAL JOIN genres NATURAL JOIN books) as all_book_ratings;
 
 -- [Query 11]
--- Get the highest-rated book titles in each genre and year, sort from oldest to newest
--— this query makes use of our UDF
+-- Get the highest-rated book titles in each genre and year, 
+-- sort from oldest to newest
+-- this query makes use of our UDF
 WITH 
 (
     SELECT genre, orig_publication_yr, MAX(get_avg_rating(isbn_13)) as max_rating
