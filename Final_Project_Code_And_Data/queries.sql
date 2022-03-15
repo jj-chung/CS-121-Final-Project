@@ -51,7 +51,8 @@ WHERE num_pages = max_page_amount
 ORDER BY author;
 
 -- [Query 5]
--- Get all authors who have published in the 20th century and the most recent year they published
+-- Get all authors who have published in the 20th century and the most recent 
+-- year they published
 -- ALSO IN RELATIONAL ALGEBRA
 
 SELECT author, max(orig_publication_yr) as last_publish
@@ -61,7 +62,8 @@ SELECT author, max(orig_publication_yr) as last_publish
   ORDER BY last_publish DESC;
 
 -- [Query 6]
--- Get the top 10 most critically acclaimed authors by finding those with the highest average rating 
+-- Get the top 10 most critically acclaimed authors by finding those with the 
+-- highest average rating 
 
 SELECT author, AVG(rating) average_rating
     FROM books NATURAL JOIN ratings NATURAL JOIN authors
@@ -70,7 +72,8 @@ SELECT author, AVG(rating) average_rating
     LIMIT 10;
 
 -- [Query 7]
--- Get the number of ratings for each author, sorted by most to least rated, to find the authors who the most people have read
+-- Get the number of ratings for each author, sorted by most to least rated, 
+-- to find the authors who the most people have read
 -- ALSO IN RELATIONAL ALGEBRA
 
 SELECT author, COUNT(*) as num_ratings  
@@ -80,7 +83,7 @@ SELECT author, COUNT(*) as num_ratings
 
 -- [Query 8]
 -- To find new releases to read, search the books written in the last 7 years
--- that are most common on people’s too read list
+-- that are most common on people's too read list
 
 SELECT isbn_10, orig_title,COUNT(*) as read_list_count
   FROM to_read
@@ -123,7 +126,8 @@ SELECT genre, orig_title FROM
 -- this query makes use of our UDF
 WITH 
 (
-    SELECT genre, orig_publication_yr, MAX(get_avg_rating(isbn_13)) as max_rating
+    SELECT genre, orig_publication_yr, 
+        MAX(get_avg_rating(isbn_13)) AS max_rating
         FROM books NATURAL JOIN ratings NATURAL JOIN genres
         GROUP BY genre, orig_publication_yr
         ORDER BY orig_publication_yr;
