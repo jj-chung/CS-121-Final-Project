@@ -11,7 +11,7 @@ DELIMITER !
 CREATE FUNCTION get_average_rating(input_isbn_10 CHAR(10)) 
 RETURNS NUMERIC(5, 2) DETERMINISTIC
 BEGIN
-    DECLARE avg_rating INT;
+    DECLARE avg_rating NUMERIC(5, 2);
 
     SELECT AVG(rating) 
         FROM ratings
