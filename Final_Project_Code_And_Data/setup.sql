@@ -7,8 +7,8 @@ USE booksdb;
 
 -- Maintain referential integrity when dropping tables, keeping in mind foreign
 -- key constraints.  
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS authors, genres, book_details, ratings, to_read;
+-- DROP TABLE IF EXISTS books;
+-- DROP TABLE IF EXISTS authors, genres, book_details, ratings, to_read;
 
 -- This table holds information with the most essential information about each
 -- book, including isbn (which serves as a unique book id), original title, etc. 
@@ -16,10 +16,6 @@ CREATE TABLE books (
     -- Unique identifier for each book, stands for International Standard Book
     -- Number. An ISBN is assigned to each separate edition and variation of a 
     -- publication.
-    -- isbn_10                 CHAR(10)    NOT NULL,
-    -- Another way to identify books (but not used as an identifier in this
-    -- table). For more than thirty yeaazrs, ISBNs were 10 digits long, but the
-    -- system switched to a 13-digit format in 2007.
     isbn_10                 CHAR(10)    NOT NULL,
     -- Original title of publication.
     orig_title              VARCHAR(200) NOT NULL,
@@ -68,7 +64,7 @@ CREATE TABLE book_details (
     isbn_10             CHAR(10)        NOT NULL,
     -- A brief description of the book's contents. Serves as a kind of summary 
     -- or synopsis. Not every book may have this, so we allow it to be null.
-    book_description    VARCHAR(3000),
+    book_description    VARCHAR(6000),
     -- The number of pages each book has.
     num_pages           INT,
     -- The number of comments the book has received on goodreads
