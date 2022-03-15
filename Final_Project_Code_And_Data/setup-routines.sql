@@ -30,7 +30,7 @@ DROP PROCEDURE IF EXISTS add_highest_rated_book;
 
 DELIMITER !
 CREATE PROCEDURE add_highest_rated_book(
-    in_user_id INT, 
+    input_user_id INT, 
     input_author VARCHAR(50)
 )
 BEGIN
@@ -39,24 +39,23 @@ BEGIN
 
     -- author_book_ratings is a table of all books and ratings by the specified
     -- author
-    WITH 
+    WITH author_book_ratings AS
     (
         SELECT isbn_10, rating 
             FROM ratings
-            where author = input_author;
+            WHERE author = input_author
     )
-    AS author_book_ratings
-        -- We select the book(s) which have the highest rating 
-        SELECT isbn_10
-            FROM author_book_ratings 
-            WHERE rating = (SELECT MAX(rating) from author_book_ratings)
-            -- If there are multiple books which have the highest rating, we 
-            -- select the first book from our query
-            LIMIT 1
-        INTO highest_rated_isbn_10_by_author
+    -- We select the book(s) which have the highest rating 
+    SELECT isbn_10
+        FROM author_book_ratings 
+        WHERE rating = (SELECT MAX(rating) from author_book_ratings)
+        -- If there are multiple books which have the highest rating, we 
+        -- select the first book from our query
+        LIMIT 1
+    INTO highest_rated_isbn_10_by_author;
 
     INSERT INTO to_read(user_id, isbn_10)
-        VALUES (in_user_id, highest_rated_isbn_10_by_author)
+        VALUES (input_user_id, highest_rated_isbn_10_by_author)
         
 END !
 DELIMITER ;
