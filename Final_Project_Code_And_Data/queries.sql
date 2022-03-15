@@ -14,8 +14,8 @@ SELECT orig_title
 -- Users can get descriptions for books of interest
 -- Retrieve descriptions of all books related to the Harry Potter series
 SELECT orig_title, book_description
-FROM books NATURAL JOIN book_details WHERE
-orig_title LIKE "%Harry Potter%"
+    FROM books NATURAL JOIN book_details 
+    WHERE orig_title LIKE "%Harry Potter%";
 
 
 -- [Query 3]
@@ -93,13 +93,12 @@ SELECT isbn_10, orig_title, COUNT(*) AS read_list_count
 
 -- [Query 9]
 -- Find the most commonly rated book in each genre
-WITH
+WITH total_ratings AS
 (
     SELECT isbn_10, COUNT(*) AS num_ratings
         FROM ratings 
         GROUP BY isbn_10
 )
-AS total_ratings
 SELECT genre, orig_title FROM
     (SELECT genre, MAX(num_ratings) AS num_ratings 
         FROM total_ratings NATURAL JOIN genres 
@@ -111,13 +110,12 @@ SELECT genre, orig_title FROM
 
 -- [Query 10]
 -- Find the highest rated book in each genre
-WITH
+WITH avg_ratings AS
 (
     SELECT isbn_10, avg(rating) AS avg_rating
         FROM ratings 
         GROUP by isbn_10
 )
-AS avg_ratings
 SELECT genre, orig_title FROM
     (SELECT genre, MAX(avg_rating) AS avg_rating 
         FROM avg_ratings NATURAL JOIN genres 
@@ -131,15 +129,14 @@ SELECT genre, orig_title FROM
 -- Get the highest-rated book titles in each genre and year, 
 -- sort from oldest to newest
 -- this query makes use of our UDF
-WITH 
+WITH max_ratings AS
 (
     SELECT genre, orig_publication_yr, 
-        MAX(get_avg_rating(isbn_13)) AS max_rating
+        MAX(get_avg_rating(isbn_10)) AS max_rating
         FROM books NATURAL JOIN ratings NATURAL JOIN genres
         GROUP BY genre, orig_publication_yr
         ORDER BY orig_publication_yr;
 )
-AS max_ratings
 SELECT orig_title
     FROM max_ratings JOIN books ON (max_ratings.genre = book_details.genre AND
         max_ratings.year = books.orig_publication_yr AND
