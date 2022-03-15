@@ -1,16 +1,23 @@
 """
-This is a template you may start with for your Final Project application.
-You may choose to modify it, or you may start with the example function
-stubs (most of which are incomplete). An example is also posted
-from Lecture 19 on Canvas.
+Brief overview of application:
+Our application allows user to navigate the books database. Users are able
+to search books using specific search criteria, including genre, publication 
+year, author, ratings, and more. 
 
-For full credit, remove any irrelevant comments, which are included in the
-template to help you get started. Replace this program overview with a
-brief overview of your application as well (including your name/partners name).
+Users are also able to perform other actions, such as add a rating of a book
+to the database, or add a book to their "to-read" shelf by adding an entry
+to the to-read table.
 
-Some sections are provided as recommended program breakdowns, but are optional
-to keep, and you will probably want to extend them based on your application's
-features.
+Users can also view information pertaining to popular series in the database,
+such as the Harry Potter series, the Twilight Series, and more. 
+
+Users can also be recommended a book by entering a book they liked. Then,
+a similar book will be recommended by extracting information about the book they
+liked, given that it is in the database.
+
+Meanwhile, admin users can target specific readers and recommend them books
+by accessing their top-rated or to-read books. They may also view top-rated
+books within a specific timeframe to analyze the market for books.
 
 Names: Amelia Whitworth, Jennie Chung
 Emails: awhirwor@caltech.edu, jjchung@caltech.edu 
@@ -24,7 +31,6 @@ import mysql.connector.errorcode as errorcode
 # Debugging flag to print errors when debugging that shouldn't be visible
 # to an actual client. Set to False when done testing.
 DEBUG = True
-
 
 # ----------------------------------------------------------------------
 # SQL Utility Functions
@@ -64,31 +70,76 @@ def get_conn():
 # ----------------------------------------------------------------------
 # Functions for Command-Line Options/Query Execution
 # ----------------------------------------------------------------------
-def example_query():
-    param1 = ''
-    cursor = conn.cursor()
-    # Remember to pass arguments as a tuple like so to prevent SQL
-    # injection.
-    sql = 'SELECT col1 FROM table WHERE col2 = \'%s\';' % (param1, )
+def search_for_books():
+    '''
+    A method to prompt users for genre, language, and year specifications in 
+    searching the database for books. Then, using these specifications, the
+    books will be displayed in order of descending publication year.
+    '''
+    # Ask the user whether they'd like to search the database using these
+    # criteria 
+    ans = input('Would you want to search books by genre, language, and year?')
+    chosen_genre = None
+    chosen_lang = None
+    chosen_yr = None
+
+    # If yes, prompt the user for each of the search criteria
+    if ans and ans.lower()[0] == 'y':
+        chosen_genre = input('What genre are you looking for?')
+        chosen_lang = input('What language are you looking for?')
+        chosen_yr = input('After which year should the books be published?')
+
+    # If the user has entered search criteria, create the SQL query
+    if chosen_genre and chosen_lang and chosen_yr:
+        sql = """
+            SELECT orig_title, orig_publication_yr
+            FROM books NATURAL JOIN genres
+            WHERE genre = '%s' AND language_code = '%s'
+            AND orig_publication_yr > %d
+            ORDER BY orig_publication_yr DESC;""" % (chosen_genre, chosen_lang, 
+                chosen_yr)
+    
+    # Attempt to retrieve the books
     try:
+        cursor = conn.cursor()
         cursor.execute(sql)
-        # row = cursor.fetchone()
         rows = cursor.fetchall()
-        for row in rows:
-            (col1val) = (row) # tuple unpacking!
-            # do stuff with row data
     except mysql.connector.Error as err:
         if DEBUG:
             sys.stderr(err)
             sys.exit(1)
         else:
-            sys.stderr('An error occurred, give something useful for clients...')
-
-
+            sys.stderr('An error occurred, could not retrieve specified books.')
+    
+    # If there are no books, let the user know. Otherwise, display
+    # the results.
+    if not rows:
+        print("""Could not find any books under genre %s, in %s, published after
+            %d""".format(chosen_genre, chosen_lang, chosen_yr))
+    else:
+        print("""The following are books under genre %s, in %s, published after
+            %d""".format(chosen_genre, chosen_lang, chosen_yr))
+        for row in rows:
+            (orig_title, orig_publication_yr) = (row) 
+            print('    ', f'{orig_title}', f'{orig_publication_yr}')
 
 # ----------------------------------------------------------------------
 # Functions for Logging Users In
 # ----------------------------------------------------------------------
+def sign_up():
+    """
+    If a user doesn't have an account yet, allow them to create an account.
+    """
+
+def authenticate_login():
+    """
+    Ask for a user's login information, and verify whether their login
+    information is valid.
+    """
+    has_acct = input('Do you already have an account?')
+
+    # If they don't have an account, prompt them to sign up first. Otherwise,
+    # check if their login information is valid.
 
 
 # ----------------------------------------------------------------------
