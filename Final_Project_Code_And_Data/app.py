@@ -85,7 +85,7 @@ def execute_sql_query(sql, error_message):
             sys.stderr(err)
             sys.exit(1)
         else:
-            sys.stderr(error_message)
+            sys.stderr.write(error_message + '\n')
 
     return rows
 
@@ -103,7 +103,7 @@ def execute_sql_command(sql, error_message):
             sys.stderr(err)
             sys.exit(1)
         else:
-            sys.stderr(error_message)
+            sys.stderr.write(error_message + '\n')
 
 
 def search_for_books():
@@ -114,17 +114,49 @@ def search_for_books():
     '''
     # Ask the user whether they'd like to search the database using these
     # criteria 
-    ans = input('Would you want to search books by genre, language, and year?')
+    ans = input(("Would you want to search books by genre, language, "
+        "and year? (y/n): "))
     chosen_genre = None
     chosen_lang = None
     chosen_yr = None
+    rows = []
 
     # If yes, prompt the user for each of the search criteria
     if ans and ans.lower()[0] == 'y':
-        chosen_genre = input('What genre are you looking for?')
-        chosen_lang = input("""What language are you looking for? 
-            (Options: eng, ara, )""")
-        chosen_yr = input('After which year should the books be published?')
+        chosen_genre = input(("What genre are you looking for? (Press (l) for "
+            "a list of genres): "))
+
+        if chosen_genre == 'l':
+            sql = "SELECT DISTINCT genre FROM genres"
+            # Attempt to retrieve the genres
+            rows = execute_sql_query(sql, ("An error occurred, could not get " 
+            "list of genres."))
+            for row in rows:
+                print('    ', row[0])
+
+            chosen_genre = input("What genre are you looking for?: ")
+
+        chosen_lang = input("What language are you looking for? (Press (l) for "
+            "a list of language codes): ")
+
+        if chosen_lang == 'l':
+            sql = "SELECT DISTINCT language_code FROM books"
+            # Attempt to retrieve the language codes
+            rows = execute_sql_query(sql, ("An error occurred, could not get " 
+            "list of language_codes. "))
+            for row in rows:
+                print('    ', row[0])
+
+            chosen_lang = input("What language are you looking for?")
+
+        is_valid_year = False
+        while not is_valid_year:
+            chosen_yr = input("After which year should the books be published? ")
+            try:
+                val = int(chosen_yr)
+                is_valid_year = True
+            except ValueError:
+                print('Not a valid year. Please try again.')
 
     # If the user has entered search criteria, create the SQL query
     if chosen_genre and chosen_lang and chosen_yr:
@@ -136,21 +168,21 @@ def search_for_books():
             ORDER BY orig_publication_yr DESC;""" % (chosen_genre, chosen_lang, 
                 chosen_yr)
     
-    # Attempt to retrieve the books
-    rows = execute_sql_query(sql, """An error occurred, could not retrieve 
-        specified books.""")
+        # Attempt to retrieve the books
+        rows = execute_sql_query(sql, ("An error occurred, could not retrieve " 
+            "specified books."))
     
-    # If there are no books, let the user know. Otherwise, display
-    # the results.
-    if not rows:
-        print("""Could not find any books under genre %s, in %s, published after
-            %d""".format(chosen_genre, chosen_lang, chosen_yr))
-    else:
-        print("""The following are books under genre %s, in %s, published after
-            %d""".format(chosen_genre, chosen_lang, chosen_yr))
-        for row in rows:
-            (orig_title, orig_publication_yr) = (row) 
-            print('    ', orig_title, orig_publication_yr)
+        # If there are no books, let the user know. Otherwise, display
+        # the results.
+        if not rows:
+            print(("Could not find any books under genre {}, in {}, published "
+                "post-{}").format(chosen_genre, chosen_lang, chosen_yr))
+        else:
+            print(("The following are books under genre {}, in {}, published "
+                "post-{}").format(chosen_genre, chosen_lang, chosen_yr))
+            for row in rows:
+                (orig_title, orig_publication_yr) = (row) 
+                print('    ', orig_title, orig_publication_yr)
 
 
 def add_rating():
@@ -159,25 +191,25 @@ def add_rating():
     book to the database.
     """
     # Ask the user whether they'd like to rate a book
-    ans = input('Would you like to rate a book?')
+    ans = input('Would you like to rate a book? (y/n): ')
     user_id = None
     isbn_10 = None
     rating = None
 
     # If yes, prompt the user for rating info
     if ans and ans.lower()[0] == 'y':
-        user_id = input('What is your user_id?')
-        isbn_10 = input('What is the isbn_10 identifier of the book?')
-        rating = input('What do you rate this book (1 to 5 stars?')
+        user_id = input('What is your user_id? ')
+        isbn_10 = input(('What is the isbn_10 identifier of the book? '
+            '(must be 10 characters): '))
+        rating = input('What do you rate this book (1 to 5 stars)? ')
 
     # If the user has entered valid rating info, create the SQL command
     if user_id and isbn_10 and rating:
         sql = """
             INSERT INTO ratings(user_id, isbn_10, rating) 
-            VALUES (%s, %s, %s);""" % (user_id, isbn_10, rating)
-    
-    # Attempt to add this book to the ratings table
-    execute_sql_command('An error occurred, could not add rating to database.')
+            VALUES (%s, '%s', %s);""" % (user_id, isbn_10, rating)
+        # Attempt to add this book to the ratings table
+        execute_sql_command(sql, 'An error occurred, could not add rating.')
 
 
 def add_to_read_item():
@@ -186,7 +218,7 @@ def add_to_read_item():
     entry to the to-read table.
     """
     # Ask the user whether they'd like to add a book to their to-read shelf
-    ans = input('Would you like to add a book to your to-read shelf?')
+    ans = input('Would you like to add a book to your to-read shelf? (y/n): ')
     user_id = None
     isbn_10 = None
 
@@ -201,8 +233,8 @@ def add_to_read_item():
             INSERT INTO to_read(user_id, isbn_10) 
             VALUES (%s, %s);""" % (user_id, isbn_10)
     
-    # Attempt to add this book to the to_read table
-    execute_sql_command('An error occurred, could not add book to to_read.')
+        # Attempt to add this book to the to_read table
+        execute_sql_command(sql, 'An error occurred, could not add book to to_read.')
 
 
 def view_popular_series_info():
@@ -212,8 +244,8 @@ def view_popular_series_info():
     and more. 
     """
     # Ask the user whether they'd like to see popular series information
-    ans = input("""Would you like to see information on books by 
-        authors of popular series?""")
+    ans = input(("Would you like to see information on books by "
+        "authors of popular series? (y/n): "))
     chosen_author = None
     option = None
 
@@ -249,21 +281,21 @@ def view_popular_series_info():
             FROM books NATURAL JOIN book_details NATURAL JOIN authors 
             WHERE author LIKE '%%%s%%';""" % (chosen_author)
     
-    # Attempt to retrieve the books by this popular series author
-    rows = execute_sql_query(sql, """An error occurred, could not retrieve 
-        popular series.""")
+        # Attempt to retrieve the books by this popular series author
+        rows = execute_sql_query(sql, ("An error occurred, could not retrieve "
+            "popular series."))
     
-    # If there are no books, let the user know. Otherwise, display
-    # the results.
-    if not rows:
-        print("Could not find any books by %s".format(chosen_author))
-    else:
-        print("The following are books are by %s:".format(chosen_author))
-        for row in rows:
-            (orig_title, orig_publication_yr, author, num_pages, num_comments,
-                num_editions) = (row) 
-            print('    ', orig_title, orig_publication_yr, 
-                author, num_pages, num_comments, num_editions)
+        # If there are no books, let the user know. Otherwise, display
+        # the results.
+        if not rows:
+            print("Could not find any books by %s".format(chosen_author))
+        else:
+            print("The following are books are by %s:".format(chosen_author))
+            for row in rows:
+                (orig_title, orig_publication_yr, author, num_pages, num_comments,
+                    num_editions) = (row) 
+                print('    ', orig_title, orig_publication_yr, 
+                    author, num_pages, num_comments, num_editions)
     
 
 def get_isbn_10(select_option):
@@ -310,7 +342,7 @@ def get_book_recommendation():
     """
     # Ask the user whether they'd like to search the database using these
     # criteria 
-    ans = input('Would you like to get a book recommendation?')
+    ans = input('Would you like to get a book recommendation? (y/n): ')
     isbn_10 = None
 
     by_genre = None
@@ -338,62 +370,62 @@ def get_book_recommendation():
                 FROM books NATURAL JOIN genres NATURAL JOIN authors
                 WHERE isbn_10 = %s""" % (isbn_10)
         
-        # Attempt to retrieve the books
-        rows = execute_sql_query(sql, """An error occurred, could not retrieve
-            book to base recommendation on.""")
+            # Attempt to retrieve the books
+            rows = execute_sql_query(sql, ("An error occurred, could not retrieve"
+                "book to base recommendation on."))
         
-        # If there are no books, let the user know. Otherwise, make some
-        # recommendations with the same genre, publication year, and/or 
-        # author
-        if not rows:
-            print("""A book with isbn_10 %s does not exist in the 
-                database""".format(isbn_10))
-        else:
-            for row in rows:
-                (isbn_10, orig_title, genre, year, author) = (row) 
-                recommendations = []
-                
-                # Find a book in the same genre
-                sql = """
-                SELECT isbn_10, orig_title
-                FROM books NATURAL JOIN genres
-                WHERE genre = '%s'
-                """% (genre)
-                same_genre_row = execute_sql_query(sql, """An error occured, 
-                    could not retrieve same genre book""")
-                if same_genre_row:
-                    recommendations.append(same_genre_row)
+            # If there are no books, let the user know. Otherwise, make some
+            # recommendations with the same genre, publication year, and/or 
+            # author
+            if not rows:
+                print(("A book with isbn_10 %s does not exist in the "
+                    "database").format(isbn_10))
+            else:
+                for row in rows:
+                    (isbn_10, orig_title, genre, year, author) = (row) 
+                    recommendations = []
+                    
+                    # Find a book in the same genre
+                    sql = """
+                    SELECT isbn_10, orig_title
+                    FROM books NATURAL JOIN genres
+                    WHERE genre = '%s'
+                    """% (genre)
+                    same_genre_row = execute_sql_query(sql, ("An error occured,"
+                        " could not retrieve same genre book"))
+                    if same_genre_row:
+                        recommendations.append(same_genre_row)
 
-                sql = """
-                SELECT isbn_10, orig_title
-                FROM books
-                WHERE orig_publication_yr = '%s'
-                """% (year)
-                # Find a book in the same publication year
-                same_year_row = execute_sql_query(sql, """An error occured, 
-                    could not retrieve same publication year book""")
-                if same_year_row:
-                    recommendations.append(same_year_row)
+                    sql = """
+                    SELECT isbn_10, orig_title
+                    FROM books
+                    WHERE orig_publication_yr = '%s'
+                    """% (year)
+                    # Find a book in the same publication year
+                    same_year_row = execute_sql_query(sql, ("An error occured, "
+                        "could not retrieve same publication year book"))
+                    if same_year_row:
+                        recommendations.append(same_year_row)
 
-                sql = """
-                SELECT isbn_10, orig_title
-                FROM books NATURAL JOIN authors
-                WHERE author = '%s'
-                """% (author)
-                # Find a book with the same author
-                same_year_row = execute_sql_query(sql, """An error occured, 
-                    could not retrieve same author book""")
-                if same_year_row:
-                    recommendations.append(same_year_row)
+                    sql = """
+                    SELECT isbn_10, orig_title
+                    FROM books NATURAL JOIN authors
+                    WHERE author = '%s'
+                    """% (author)
+                    # Find a book with the same author
+                    same_year_row = execute_sql_query(sql, ("An error occured, "
+                        "could not retrieve same author book"))
+                    if same_year_row:
+                        recommendations.append(same_year_row)
 
-                if recommendations:
-                    print('Here are some recommendations based on your selection:')
-                    for row in recommendations:
-                        (orig_title, orig_publication_yr) = (row) 
-                        print('    ', isbn_10, orig_title)
-                else:
-                    print("""There are no books with the same genre, 
-                        publication year, or author as the selection.""")
+                    if recommendations:
+                        print('Here are some recommendations: ')
+                        for row in recommendations:
+                            (orig_title, orig_publication_yr) = (row) 
+                            print('    ', isbn_10, orig_title)
+                    else:
+                        print(("There are no books with the same genre, "
+                            "publication year, or author as the selection."))
 
 
 def get_users_top_rated():
@@ -402,7 +434,7 @@ def get_users_top_rated():
     by accessing their top-rated or to-read books.
     """
     # Ask the user whether they'd like to get a user's top rated books
-    ans = input('Would you like to get a user\'s top rated books?')
+    ans = input('Would you like to get a user\'s top rated books? (y/n): ')
     chosen_user_id = None
 
     # If yes, prompt the user for user_id
@@ -418,19 +450,19 @@ def get_users_top_rated():
             ORDER BY rating DESC
             LIMIT 10;""" % (chosen_user_id)
     
-    # Attempt to retrieve the user's top rated books
-    rows = execute_sql_query(sql, """An error occurred, could not retrieve 
-        user's top rated books.""")
+        # Attempt to retrieve the user's top rated books
+        rows = execute_sql_query(sql, ("An error occurred, could not retrieve "
+            "user\'s top rated books."))
     
-    # If there are no books, let the user know. Otherwise, display
-    # the results.
-    if not rows:
-        print("Could not find user %s's top rated books".format(chosen_user_id))
-    else:
-        print("User %s's top rated books:".format(chosen_user_id))
-        for row in rows:
-            (isbn_10, rating) = (row) 
-            print('    ', isbn_10, rating)
+        # If there are no books, let the user know. Otherwise, display
+        # the results.
+        if not rows:
+            print("Could not find user %s's top rated books".format(chosen_user_id))
+        else:
+            print("User %s's top rated books:".format(chosen_user_id))
+            for row in rows:
+                (isbn_10, rating) = (row) 
+                print('    ', isbn_10, rating)
 
 
 def get_top_rated_in_timeframe():
@@ -439,7 +471,7 @@ def get_top_rated_in_timeframe():
     analyze the market for books.
     """
      # Ask the user whether they'd like to get a user's top rated books
-    ans = input('Would you like to get top rated books within a timeframe?')
+    ans = input('Would you like to get top rated books in a timeframe? (y/n): ')
     start_year = None
     end_year = None
 
@@ -457,20 +489,20 @@ def get_top_rated_in_timeframe():
             GROUP BY isbn_10
             ORDER BY avg_rating DESC;""" % (start_year, end_year)
     
-    # Attempt to retrieve the user's top rated books
-    rows = execute_sql_query(sql, """An error occurred, could not retrieve 
-        top rated books in specified timeframe.""")
+        # Attempt to retrieve the user's top rated books
+        rows = execute_sql_query(sql, ("An error occurred, could not retrieve " 
+            "top rated books in specified timeframe."))
     
-    # If there are no books, let the user know. Otherwise, display
-    # the results.
-    if not rows:
-        print("""Could not find top rated books between %s 
-            and %s""".format(start_year, end_year))
-    else:
-        print("Top rated books %s to %s:".format(start_year, end_year))
-        for row in rows:
-            (isbn_10, avg_rating) = (row) 
-            print('    ', isbn_10, avg_rating)
+        # If there are no books, let the user know. Otherwise, display
+        # the results.
+        if not rows:
+            print(("Could not find top rated books between %s "
+                "and %s").format(start_year, end_year))
+        else:
+            print("Top rated books %s to %s:".format(start_year, end_year))
+            for row in rows:
+                (isbn_10, avg_rating) = (row) 
+                print('    ', isbn_10, avg_rating)
 
 
 # ----------------------------------------------------------------------
@@ -480,8 +512,8 @@ def sign_up():
     """
     If a user doesn't have an account yet, allow them to create an account.
     """
-    username = input('Please enter your new username (<= 20 characters):')
-    password = input('Please enter your new password (<= 20 characters):')
+    username = input('Please enter your new username (<= 20 characters): ')
+    password = input('Please enter your new password (<= 20 characters): ')
 
     # If the user has entered a username and password, add them 
     if username and password:
@@ -490,8 +522,8 @@ def sign_up():
             """ % (username, password)
     
     # Attempt to execute the SQL procedure
-    execute_sql_command(sql, """An error occurred, could not add user to 
-        database.""")
+    execute_sql_command(sql, ("An error occurred, could not add user to "
+        "database."))
 
 
 def authenticate_login():
@@ -499,8 +531,10 @@ def authenticate_login():
     Ask for a user's login information, and verify whether their login
     information is valid.
     """
-    print('Do you already have an account?')
-    has_acct = input('Enter y/n:')
+    # Variable to store user's role 
+    role = ''
+
+    has_acct = input('Do you already have an account? (y/n): ')
     username = None
     password = None
 
@@ -508,36 +542,45 @@ def authenticate_login():
     # check if their login information is valid.
     # If yes, prompt the user for each of the search criteria
     if has_acct and has_acct.lower()[0] == 'y':
-        username = input('Please enter your username:')
-        password = input('Please enter your password:')
+        username = input('Please enter your username: ')
+        password = input('Please enter your password: ')
+    elif has_acct and has_acct.lower()[0] == 'n':
+        make_acct = input('Would you like to make an account? (y/n): ')
+
+        if make_acct and has_acct.lower()[0] == 'y':
+            sign_up()
+    else: 
+        print('Invalid input. Returning to login.')
+        return role
 
     # If the user has entered login info, create the SQL command
     if username and password:
         sql = "SELECT authenticate('%s', '%s');" % (username, password)
     
-    # Attempt to authenticate this user
-    authenticated = execute_sql_query(sql, """An error occurred, could not 
-        login.""")
+        # Attempt to authenticate this user
+        authenticated = execute_sql_query(sql, ("An error occurred, could not "
+            "login."))
 
-    row = authenticated[0]
-    is_authenticated = row[0]
+        row = authenticated[0]
+        is_authenticated = row[0]
 
-    if is_authenticated == 1:
-        print('Login successful!')
-        
-        # Get role of user 
-        sql = """
-            SELECT user_role
-            FROM user_info
-            WHERE username = '%s'""" % (username)
+        if is_authenticated == 1:
+            print('Login successful!')
+            
+            # Get role of user 
+            sql = """
+                SELECT user_role
+                FROM user_info
+                WHERE username = '%s'""" % (username)
 
-        rows = execute_sql_query(sql, 
-            "An error occured, could not get user role.")
+            rows = execute_sql_query(sql, 
+                "An error occured, could not get user role.")
 
-        for row in rows:
-            return row
-    else:
-        print('Login failed. Please try again.')
+            role = rows[0][0]
+        else:
+            print('Login failed. Please try again.')
+            
+        return role
 
 
 # ----------------------------------------------------------------------
@@ -549,28 +592,33 @@ def show_options():
     viewing <x>, filtering results with a flag (e.g. -s to sort),
     sending a request to do <x>, etc.
     """
-    print('What would you like to do? ')
-    print('  (s) - search for books by genre, language, and year')
-    print('  (r) - add a rating for a book')
-    print('  (t) - add a book to your to-read shelf')
-    print('  (p) - view information on books by popular series authors')
-    print('  (b) - get a book recommendation')
-    print('  (q) - quit')
-    print()
+    ans = ''
 
-    ans = input('Enter an option: ').lower()
-    if ans == 'q':
-        quit_ui()
-    elif ans == 's':
-        search_for_books()
-    elif ans == 'r':
-        add_rating()
-    elif ans == 't':
-        add_to_read_item()
-    elif ans  == 'p':
-        view_popular_series_info()
-    elif ans == 'b':
-        get_book_recommendation()
+    while ans != 'q':
+        print('What would you like to do? ')
+        print('  (s) - search for books by genre, language, and year')
+        print('  (r) - add a rating for a book')
+        print('  (t) - add a book to your to-read shelf')
+        print('  (p) - view information on books by popular series authors')
+        print('  (b) - get a book recommendation')
+        print('  (q) - quit')
+        print()
+
+        ans = input('Enter an option: ').lower()
+        if ans == 'q':
+            quit_ui()
+        elif ans == 's':
+            search_for_books()
+        elif ans == 'r':
+            add_rating()
+        elif ans == 't':
+            add_to_read_item()
+        elif ans  == 'p':
+            view_popular_series_info()
+        elif ans == 'b':
+            get_book_recommendation()
+        else:
+            print('Invalid option. Press q to quit.')
 
 
 # You may choose to support admin vs. client features in the same program, or
@@ -607,15 +655,24 @@ def main():
     """
     Main function for starting things up.
     """
-    # Allow users to login
-    role = authenticate_login()[0]
+    ans = ''
+    while ans != 'y':
+        ans = input('Would you like to login? (y/n): ')
 
-    print(role)
-    # Depending on whether the user is admin or not, show options
-    if role == 'reader':
-        show_options()
-    if role == 'retailer':
-        show_admin_options()
+        if ans and ans.lower()[0] == 'n':
+            quit_ui()
+        elif ans and ans.lower()[0] == 'y':
+            role = authenticate_login()
+
+            # Depending on whether the user is admin or not, show options
+            if role == 'reader':
+                show_options()
+            elif role == 'retailer':
+                show_admin_options()
+            else:
+                ans = 'n'
+        else:
+            print('Invalid input. Press n to quit.')
 
 if __name__ == '__main__':
     # This conn is a global object that other functinos can access.

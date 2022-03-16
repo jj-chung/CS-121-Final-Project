@@ -25,7 +25,8 @@ CREATE TABLE books (
     -- A short language code which identifies the language in which the 
     -- book was published.
     language_code           VARCHAR(5) NOT NULL,
-    PRIMARY KEY (isbn_10)
+    PRIMARY KEY (isbn_10),
+    CHECK (orig_publication_yr >= 0)
 );
 
 -- This table holds isbn_10's and authors for different books.
