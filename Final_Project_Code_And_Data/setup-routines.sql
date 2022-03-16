@@ -38,24 +38,25 @@ BEGIN
     DECLARE highest_rated_isbn_10_by_author CHAR(10);
 
     -- author_book_ratings is a table of all books and ratings by the specified
-    -- author
+    -- author. Then, we select the book(s) which have the highest rating 
+    SELECT (
     WITH author_book_ratings AS
     (
         SELECT isbn_10, rating 
             FROM ratings
             WHERE author = input_author
     )
-    -- We select the book(s) which have the highest rating 
     SELECT isbn_10
         FROM author_book_ratings 
-        WHERE rating = (SELECT MAX(rating) from author_book_ratings)
+        WHERE rating = (SELECT MAX(rating) AS max_rating 
+            FROM author_book_ratings)
         -- If there are multiple books which have the highest rating, we 
         -- select the first book from our query
-        LIMIT 1
+        LIMIT 1)
     INTO highest_rated_isbn_10_by_author;
 
     INSERT INTO to_read(user_id, isbn_10)
-        VALUES (input_user_id, highest_rated_isbn_10_by_author)
+        VALUES (input_user_id, highest_rated_isbn_10_by_author);
         
 END !
 DELIMITER ;
@@ -64,7 +65,7 @@ DELIMITER ;
 -- which contains stats about a book's ratings.
 CREATE TABLE mv_book_stats 
 (
-    isbn_10     CHAR(10) PRIMARY KEY
+    isbn_10     CHAR(10) PRIMARY KEY,
     num_ratings INT NOT NULL,
     total_stars INT NOT NULL
 );
@@ -74,7 +75,7 @@ CREATE TABLE mv_book_stats
 INSERT INTO mv_book_stats(
     SELECT isbn_10,
         COUNT(*),
-        SUM(ratings)
+        SUM(rating)
     FROM ratings GROUP BY isbn_10
 );
 
@@ -89,6 +90,8 @@ CREATE VIEW book_stats AS
 -- A procedure to execute when inserting a new isbn_10 and rating
 -- to the book stats materialized view (mv_book_stats).
 -- If an isbn_10 is already in view, the associated information is updated.
+DELIMITER !
+
 CREATE PROCEDURE sp_book_stats_new_rating(
     new_isbn_10 CHAR(10),
     new_rating INT
@@ -105,7 +108,7 @@ END !
 
 -- Handles new rows added to ratings table, updates stats accordingly
 CREATE TRIGGER trg_ratings_insert AFTER INSERT
-       ON ratings FOR EACH ROW
+    ON ratings FOR EACH ROW
 BEGIN
     CALL sp_book_stats_new_rating(NEW.isbn_10, NEW.rating);
 END !

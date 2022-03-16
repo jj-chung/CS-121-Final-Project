@@ -56,8 +56,7 @@ dataset, each described below:
     - ```isbn_10```: See books.csv.
 
 ## Instructions for loading our data from the command-line in MySQL
-After cloning this repository using ```git clone``` or downloading this 
-repository, 
+After putting all .csv files in the same directory as the files below, 
 1. Start mysql. Then within mysql:
 2. Setup the database and tables using ```source setup.sql```
 3. Load the data using ```source load-data.sql```
