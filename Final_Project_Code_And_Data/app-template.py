@@ -269,8 +269,31 @@ def get_isbn_10(select_option):
     Helper function for get_book_recommendation for users to either select a 
     book from a list of books or directly input an isbn. 
     """
+    # If the user wants to select from a list of options, let them select one,
+    # otherwise they can input the isbn_10 directly.
     if select_option == 'options':
+        print('Which of these books appeals to you most?')
+        print('  (h) - The Hobbit and The Lord of the Rings')
+        print('  (hp) - Harry Potter and the Philosopher\'s Stone')
+        print('  (m) - A Midsummer Night\'s Dream')
+        print('  (g) - The Giver')
+        print('  (t) - A Tale of Two Cities')
         print()
+
+        option = input('Enter an option: ').lower()
+
+        # We hardcode these isbn_10 identifiers in case there are duplicate
+        # titles or duplicate titles are added to the db later on
+        if option == 'h':
+            isbn_10 = ' 345538374'
+        elif option == 'hp':
+            isbn_10 = ' 439554934'
+        elif option == 'm':
+            isbn_10 = ' 743477545'
+        elif option == 'g':
+            isbn_10 = ' 385732554'
+        elif option == 't':
+            isbn_10 = ' 141439602'
     elif select_option == 'direct_selection':
         isbn_10 = input('What is the isbn_10 of a book you\'ve enjoyed?')
 
