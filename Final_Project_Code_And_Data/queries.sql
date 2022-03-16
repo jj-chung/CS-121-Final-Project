@@ -17,7 +17,6 @@ SELECT orig_title, book_description
     FROM books NATURAL JOIN book_details 
     WHERE orig_title LIKE '%Harry Potter%';
 
-
 -- [Query 3]
 -- For genres with foreign language books,
 -- get the percentage of books not written in English, from highest to lowest
@@ -126,18 +125,24 @@ SELECT genre, orig_title FROM
         NATURAL JOIN books) AS all_book_ratings;
 
 -- [Query 11]
--- Get the highest-rated book titles in each genre and year, 
--- sort from oldest to newest
--- this query makes use of our UDF
-WITH max_ratings AS
-(
-    SELECT genre, orig_publication_yr, 
-        MAX(get_avg_rating(isbn_10)) AS max_rating
-        FROM books NATURAL JOIN ratings NATURAL JOIN genres
-        GROUP BY genre, orig_publication_yr
-        ORDER BY orig_publication_yr;
-)
-SELECT orig_title
-    FROM max_ratings JOIN books ON (max_ratings.genre = book_details.genre AND
-        max_ratings.year = books.orig_publication_yr AND
-        max_rating = ratings.rating);
+-- Get top rated books within a specific timeframe 
+SELECT isbn_10, AVG(rating) AS avg_rating
+    FROM ratings NATURAL JOIN books
+    WHERE publication_year > 2000 AND publication_year < 2005
+    GROUP BY isbn_10
+    ORDER BY avg_rating DESC;
+
+-- [Query 12]
+-- Get the top (up to) 10 rated books by user with user-id
+SELECT isbn_10, rating
+    FROM ratings
+    WHERE user_id = 1
+    ORDER BY rating DESC
+    LIMIT 10;
+
+-- [Query 13]
+-- Get book information of all books writen by one particular author
+SELECT orig_title, orig_publication_yr, author, num_pages, 
+    num_comments, num_editions  
+    FROM books NATURAL JOIN book_details NATURAL JOIN authors 
+    WHERE author LIKE 'J.K. Rowling';

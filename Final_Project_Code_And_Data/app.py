@@ -77,7 +77,7 @@ def execute_sql_query(sql, error_message):
     try:
         cursor = conn.cursor()
         cursor.execute(sql)
-        cursor.commit()
+        conn.commit()
         rows = cursor.fetchall()
     except mysql.connector.Error as err:
         if DEBUG:
@@ -95,7 +95,7 @@ def execute_sql_command(sql, error_message):
     try:
         cursor = conn.cursor()
         cursor.execute(sql)
-        cursor.commit()
+        conn.commit()
     except mysql.connector.Error as err:
         if DEBUG:
             sys.stderr(err)
@@ -148,7 +148,7 @@ def search_for_books():
             %d""".format(chosen_genre, chosen_lang, chosen_yr))
         for row in rows:
             (orig_title, orig_publication_yr) = (row) 
-            print('    ', f'{orig_title}', f'{orig_publication_yr}')
+            print('    ', orig_title, orig_publication_yr)
 
 
 def add_rating():
@@ -260,8 +260,8 @@ def view_popular_series_info():
         for row in rows:
             (orig_title, orig_publication_yr, author, num_pages, num_comments,
                 num_editions) = (row) 
-            print('    ', f'{orig_title}', f'{orig_publication_yr}', 
-            f'{author}', f'{num_pages}', f'{num_comments}', f'{num_editions}')
+            print('    ', orig_title, orig_publication_yr, 
+                author, num_pages, num_comments, num_editions)
     
 
 def get_isbn_10(select_option):
@@ -388,7 +388,7 @@ def get_book_recommendation():
                     print('Here are some recommendations based on your selection:')
                     for row in recommendations:
                         (orig_title, orig_publication_yr) = (row) 
-                        print('    ', f'{orig_title}', f'{orig_publication_yr}')
+                        print('    ', isbn_10, orig_title)
                 else:
                     print("""There are no books with the same genre, 
                         publication year, or author as the selection.""")
@@ -428,7 +428,7 @@ def get_users_top_rated():
         print("User %s's top rated books:".format(chosen_user_id))
         for row in rows:
             (isbn_10, rating) = (row) 
-            print('    ', f'{isbn_10}', f'{rating}')
+            print('    ', isbn_10, rating)
 
 
 def get_top_rated_in_timeframe():
@@ -468,7 +468,7 @@ def get_top_rated_in_timeframe():
         print("Top rated books %s to %s:".format(start_year, end_year))
         for row in rows:
             (isbn_10, avg_rating) = (row) 
-            print('    ', f'{isbn_10}', f'{avg_rating}')
+            print('    ', isbn_10, avg_rating)
 
 
 # ----------------------------------------------------------------------
@@ -488,16 +488,8 @@ def sign_up():
             """ % (username, password)
     
     # Attempt to execute the SQL procedure
-    try:
-        cursor = conn.cursor()
-        cursor.execute(sql)
-        cursor.commit()
-    except mysql.connector.Error as err:
-        if DEBUG:
-            sys.stderr(err)
-            sys.exit(1)
-        else:
-            sys.stderr('An error occurred, could not add user to database.')
+    execute_sql_command(sql, """An error occurred, could not add user to 
+        database.""")
 
 
 def authenticate_login():
@@ -505,7 +497,8 @@ def authenticate_login():
     Ask for a user's login information, and verify whether their login
     information is valid.
     """
-    has_acct = input('Do you already have an account?')
+    print('Do you already have an account?')
+    has_acct = input('Enter y/n:')
     username = None
     password = None
 
@@ -518,29 +511,23 @@ def authenticate_login():
 
     # If the user has entered login info, create the SQL command
     if username and password:
-        sql = """
-            authenticate(%s, %s)""" % (username, password)
+        sql = "SELECT authenticate('%s', '%s');" % (username, password)
     
     # Attempt to authenticate this user
-    try:
-        cursor = conn.cursor()
-        cursor.execute(sql)
-        authenticated = cursor.fetchall()
-    except mysql.connector.Error as err:
-        if DEBUG:
-            sys.stderr(err)
-            sys.exit(1)
-        else:
-            sys.stderr('An error occurred, could not login.')
+    authenticated = execute_sql_command(sql, """An error occurred, could not 
+        login.""")
 
-    if authenticated == '1':
+    row = authenticated[0]
+    is_authenticated = row[0]
+
+    if is_authenticated == 1:
         print('Login successful!')
         
         # Get role of user 
         sql = """
-            SELECT role
+            SELECT user_role
             FROM user_info
-            WHERE username = %s""" % (username, password)
+            WHERE username = '%s'""" % (username)
 
         rows = execute_sql_query(sql, 
             "An error occured, could not get user role.")
