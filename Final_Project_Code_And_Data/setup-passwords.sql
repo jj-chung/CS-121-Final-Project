@@ -47,7 +47,11 @@ CREATE TABLE user_info (
     -- represented as 2 characters.  Thus, 256 / 8 * 2 = 64.
     -- We can use BINARY or CHAR here; BINARY simply has a different
     -- definition for comparison/sorting than CHAR.
-    password_hash BINARY(64) NOT NULL
+    password_hash BINARY(64) NOT NULL,
+
+    -- Different roles for different users within the application.
+    user_role VARCHAR(20) NOT NULL DEFAULT 'reader',
+    CHECK user_role IN ('reader', 'retailer')
 );
 
 -- [Problem 1a]
@@ -58,7 +62,11 @@ CREATE TABLE user_info (
 DROP PROCEDURE IF EXISTS sp_add_user;
 
 DELIMITER !
-CREATE PROCEDURE sp_add_user(new_username VARCHAR(20), password VARCHAR(20))
+CREATE PROCEDURE sp_add_user(
+    new_username VARCHAR(20), 
+    password VARCHAR(20),
+    user_role VARCHAR(20)
+)
 BEGIN
     -- The salt we will add to the password before hashing
     DECLARE pw_salt CHAR(8);
@@ -67,7 +75,8 @@ BEGIN
     -- Insert the new user info user_info, using SHA2 with 256-bit hashes for
     -- the user's password
     INSERT INTO user_info(username, salt, password_hash)
-        VALUES (new_username, pw_salt, SHA2(CONCAT(pw_salt, password), 256));
+        VALUES (new_username, pw_salt, SHA2(CONCAT(pw_salt, password), 256), 
+            user_role);
 END !
 DELIMITER ;
 
@@ -110,8 +119,9 @@ DELIMITER ;
 -- [Problem 1c]
 -- Add at least two users into your user_info table so that when we run this 
 -- file, we will have examples users in the database.
-CALL sp_add_user('avidreader', 'WRAYp7e');
-CALL sp_add_user('bookworm', '5d3SqJX');
+CALL sp_add_user('avidreader', 'WRAYp7e', 'reader');
+CALL sp_add_user('bookworm', '5d3SqJX', 'reader');
+CALL sp_add_user('bookseller', 'sellbooks900', 'retailer')
 
 -- [Problem 1d]
 -- Optional: Create a procedure sp_change_password to generate a new salt and 
