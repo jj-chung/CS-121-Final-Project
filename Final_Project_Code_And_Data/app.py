@@ -77,8 +77,9 @@ def execute_sql_query(sql, error_message):
     try:
         cursor = conn.cursor()
         cursor.execute(sql)
-        conn.commit()
         rows = cursor.fetchall()
+        conn.commit()
+        cursor.close()
     except mysql.connector.Error as err:
         if DEBUG:
             sys.stderr(err)
@@ -96,6 +97,7 @@ def execute_sql_command(sql, error_message):
         cursor = conn.cursor()
         cursor.execute(sql)
         conn.commit()
+        cursor.close()
     except mysql.connector.Error as err:
         if DEBUG:
             sys.stderr(err)
@@ -514,7 +516,7 @@ def authenticate_login():
         sql = "SELECT authenticate('%s', '%s');" % (username, password)
     
     # Attempt to authenticate this user
-    authenticated = execute_sql_command(sql, """An error occurred, could not 
+    authenticated = execute_sql_query(sql, """An error occurred, could not 
         login.""")
 
     row = authenticated[0]
@@ -606,8 +608,9 @@ def main():
     Main function for starting things up.
     """
     # Allow users to login
-    role = authenticate_login()
+    role = authenticate_login()[0]
 
+    print(role)
     # Depending on whether the user is admin or not, show options
     if role == 'reader':
         show_options()
