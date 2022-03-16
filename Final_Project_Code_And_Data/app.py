@@ -43,7 +43,7 @@ def get_conn():
     try:
         conn = mysql.connector.connect(
           host='localhost',
-          user='booksdbadmin',
+          user='bookretailer',
           # Find port in MAMP or MySQL Workbench GUI or with
           # SHOW VARIABLES WHERE variable_name LIKE 'port';
           port='3306',
