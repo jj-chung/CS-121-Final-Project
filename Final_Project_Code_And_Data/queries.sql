@@ -128,7 +128,7 @@ SELECT genre, orig_title FROM
 -- Get top rated books within a specific timeframe 
 SELECT isbn_10, AVG(rating) AS avg_rating
     FROM ratings NATURAL JOIN books
-    WHERE publication_year > 2000 AND publication_year < 2005
+    WHERE orig_publication_yr > 2000 AND orig_publication_yr < 2005
     GROUP BY isbn_10
     ORDER BY avg_rating DESC;
 

@@ -25,8 +25,7 @@ CREATE TABLE books (
     -- A short language code which identifies the language in which the 
     -- book was published.
     language_code           VARCHAR(5) NOT NULL,
-    PRIMARY KEY (isbn_10),
-    CHECK (orig_publication_yr >= 0)
+    PRIMARY KEY (isbn_10)
 );
 
 -- This table holds isbn_10's and authors for different books.
@@ -104,4 +103,4 @@ CREATE TABLE to_read (
 
 -- An index on orig_publication_yr, since we expect searches and queries
 -- related to the publication year.
-CREATE INDEX idx_year ON books(orig_publication_yr);
+-- CREATE INDEX idx_year ON books(orig_publication_yr);
